@@ -1,0 +1,21 @@
+.log-in-section {
+	background-color: rgba(0, 0, 0, 0.08);
+	margin: 5% 15% 5% 5%;
+}
+.login-form-email {
+	width: 40%;
+	display: inline-block;
+	margin-left: 5%;
+}
+.login-form-password {
+	width: 35%;
+	display: inline-block;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+.login-button {
+	margin-left: 5%;
+}
+.register-field {
+	margin: 0 5%;
+}

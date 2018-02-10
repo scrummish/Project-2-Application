@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Subheader from 'material-ui/Subheader';
+import './login.css';
 
 class Login extends Component {
   constructor(){
@@ -9,20 +10,35 @@ class Login extends Component {
     
     this.state={
       email:'',
-      password:''
+      password:'',
+      toggleError: false
     }
+  }
+  handleLogin = ()=>{
+    if (this.state.email === '' || this.state.password === '') {
+      this.setState({toggleError: true})
+    } else {
+      const LOGIN = {
+        email: this.state.email,
+        password: this.state.password
+      }
+      this.props.login(LOGIN);
+    }    
   }
 render() {
   return (
-      <div>
-        <Subheader>Login Form</Subheader>
-        <div>
-        <TextField hintText="Enter your Email" floatingLabelText="Email" onChange = {(e,newValue) => this.setState({email:newValue})}/>
-        <br/>
-        <TextField type="password" hintText="Enter your Password" floatingLabelText="Password" onChange = {(e,newValue) => this.setState({password:newValue})}/>
-        <br/>
-        <RaisedButton label="Login" primary={true}  onClick={(event) => this.handleClick(event)}/>
-        </div>
+      <div className="log-in-section"> 
+     
+          <div className="login-form-email">
+            <TextField fullWidth={true} hintText="Enter your Email" floatingLabelText="Email*" onChange = {(e,newValue) => this.setState({email:newValue})}/>
+          </div>
+          <div className="login-form-password">
+            <TextField fullWidth={true} type="password" hintText="Enter your Password" floatingLabelText="Password*" onChange = {(e,newValue) => this.setState({password:newValue})}/>
+          </div>
+          <div className="login-button">
+            <RaisedButton label="Login" primary={true}  onClick={this.handleLogin}/>
+          </div>
+       
       </div>
     );
   }

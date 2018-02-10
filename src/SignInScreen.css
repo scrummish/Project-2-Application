@@ -1,0 +1,12 @@
+.sign-in-flex-container {
+	display: flex;
+}
+.sign-in-flex-child {
+	width: 50%;
+}
+#sign-in-flex-child1 {
+	background-color: red;
+}
+#sign-in-flex-child2 {
+	
+}
