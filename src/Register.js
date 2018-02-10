@@ -7,10 +7,24 @@ class Register extends Component {
   constructor(){
     super();
     this.state={
-      first_name:'',
-      last_name:'',
+      firstname:'',
+      lastname:'',
       email:'',
-      password:''
+      password:'',
+      toggleError: false
+    }
+  }
+  createUser = ()=>{
+    if (this.state.firstname === '' || this.state.email === '' || this.state.password === '') {
+      this.setState({toggleError: true})
+    } else {
+      const REGISTRATION = {
+        firstname: this.state.firstname,
+        lastname: this.state.lastname,
+        email: this.state.email,
+        password: this.state.password
+      }
+      this.props.register(REGISTRATION);
     }
   }
   render() {
@@ -18,15 +32,15 @@ class Register extends Component {
       <div>
           <div>
           <AppBar title="Register"/>
-           <TextField hintText="Enter your First Name" floatingLabelText="First Name" onChange={(e,newValue) => this.setState({first_name:newValue})}/>
+           <TextField hintText="Enter your First Name" floatingLabelText="First Name *" onChange={(e,newValue) => this.setState({firstname:newValue})}/>
            <br/>
-           <TextField hintText="Enter your Last Name" floatingLabelText="Last Name" onChange={(e,newValue) => this.setState({last_name:newValue})}/>
+           <TextField hintText="Enter your Last Name" floatingLabelText="Last Name" onChange={(e,newValue) => this.setState({lastname:newValue})}/>
            <br/>
-           <TextField hintText="Enter your Email" type="email" floatingLabelText="Email" onChange={(e,newValue) => this.setState({email:newValue})}/>
+           <TextField hintText="Enter your Email" type="email" floatingLabelText="Email *" onChange={(e,newValue) => this.setState({email:newValue})}/>
            <br/>
-           <TextField type = "password" hintText="Enter your Password" floatingLabelText="Password" onChange={(e,newValue) => this.setState({password:newValue})}/>
+           <TextField type = "password" hintText="Enter your Password" floatingLabelText="Password *" onChange={(e,newValue) => this.setState({password:newValue})}/>
            <br/>
-           <RaisedButton label="Submit" primary={true} onClick={(e) => this.handleClick(e)}/>
+           <RaisedButton label="Submit" primary={true} onClick={this.createUser}/>
           </div>
       </div>
     );
