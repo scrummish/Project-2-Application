@@ -36,7 +36,8 @@ class SignInScreen extends Component {
 render() {
   return (
       <div className="sign-in-flex-container">
-        <section id="sign-in-flex-child1" className="sign-in-flex-child">Desktop version shows this half</section>
+        <section id="sign-in-flex-child1" className="sign-in-flex-child">
+        </section>
         <section id="sign-in-flex-child2" className="sign-in-flex-child">
           <MuiThemeProvider muiTheme={getMuiTheme()}>
             <Login login={this.login}/>
