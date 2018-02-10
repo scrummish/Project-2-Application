@@ -9,13 +9,16 @@ class App extends Component {
     super();
 
     this.state = {
-     toggleUser: true
+     signedin: false
     }
+  }
+  loginSuccess = (bool)=>{
+    this.setState({signedin: bool})
   }
   render() {
     return (
       <div className="App">
-        <SignInScreen/>
+        {this.state.signedin ? null : <SignInScreen loginSuccess={this.loginSuccess}/>}
       </div>
     );
   }

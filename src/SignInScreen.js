@@ -20,22 +20,24 @@ class SignInScreen extends Component {
       .send(formData)
       .end((err,createdUser)=>{
           const parsedUser = JSON.parse(createdUser.text);
-          console.log(parsedUser)
+          const registration_success_or_fail = parsedUser[2][1];
+          this.props.loginSuccess(registration_success_or_fail); 
       })
   }
   login = (formData)=>{
-      REQUEST.post('http://localhost:9292/user/')
+      REQUEST.post('http://localhost:9292/user/login')
       .send(formData)
       .end((err,createdUser)=>{
-          const parsedUser = JSON.parse(createdUser.text);
-          console.log(parsedUser, 'loggedin')
+        const parsedUser = JSON.parse(createdUser.text);
+        const registration_success_or_fail = parsedUser[2][1];
+        this.props.loginSuccess(registration_success_or_fail);
       })
   }
 render() {
   return (
-      <div class="sign-in-flex-container">
-        <section id="sign-in-flex-child1" class="sign-in-flex-child">side 1</section>
-        <section id="sign-in-flex-child2" class="sign-in-flex-child">
+      <div className="sign-in-flex-container">
+        <section id="sign-in-flex-child1" className="sign-in-flex-child">Desktop version shows this half</section>
+        <section id="sign-in-flex-child2" className="sign-in-flex-child">
           <MuiThemeProvider muiTheme={getMuiTheme()}>
             <Login login={this.login}/>
           </MuiThemeProvider>
