@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import Subheader from 'material-ui/Subheader';
+const styles = {
+  register: {
+    "font-size": "1.1em",
+    color: 'rgb(0, 188, 212)',
+    'padding-left': '0',
+    'margin-left': '5%',
+    'font-weight': '600',
+  }
+};
+
 
 class Register extends Component {
   constructor(){
@@ -29,6 +40,8 @@ class Register extends Component {
   render() {
     return (
       <div className="log-in-section">
+            <br/>
+            <Subheader style={styles.register}>New User ?</Subheader>
             <div className="register-field">
               <TextField fullWidth={true} hintText="Enter your First Name" floatingLabelText="First Name *" onChange={(e,newValue) => this.setState({firstname:newValue})}/>
             </div>
@@ -48,6 +61,7 @@ class Register extends Component {
             <div className="login-button">
               <RaisedButton label="Register" primary={true} onClick={this.createUser}/>
             </div>
+            <br/>
       </div>
     );
   }
