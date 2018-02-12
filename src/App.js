@@ -14,8 +14,8 @@ class App extends Component {
      toggleFormError: false
     }
   }
-  loginSuccess = (bool)=>{
-    this.setState({signedin: bool})
+  loginSuccess = ()=>{
+    this.setState({signedin: true})
   }
   reRenderForm = ()=>{
     console.log(this.state.toggleFormError, "un rendered app.js")

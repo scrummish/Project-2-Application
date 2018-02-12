@@ -3,6 +3,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Subheader from 'material-ui/Subheader';
 import './login.css';
+
+const REQUEST = require('superagent');
 const styles = {
   login: {
     fontSize: "1.1em",
@@ -20,29 +22,39 @@ class Login extends Component {
     this.state={
       email:'',
       password:'',
-      toggleError: false
+      toggleLoginError: true
     }
   }
   handleLogin = ()=>{
-    if (this.state.email === '' || this.state.password === '') {
-      this.setState({toggleError: true})
-    } else {
-      const LOGIN = {
-        email: this.state.email,
-        password: this.state.password
-      }
-      this.props.login(LOGIN);
-    }    
+    const loginData = {
+      email: this.state.email,
+      password: this.state.password
+    }
+    this.login(loginData);
+  }
+  login = (formData)=>{
+      REQUEST.post('http://localhost:9292/user/login')
+      .send(formData)
+      .end((err,createdUser)=>{
+        const parsedUser = JSON.parse(createdUser.text);
+        const registration_success_or_fail = parsedUser[2][1];
+      
+        if (registration_success_or_fail === true) {
+          this.props.loginSuccess();
+        } else {
+          this.setState({toggleLoginError: false})
+        }
+      })
   }
 render() {
   return (
       <div className="log-in-section"> 
-          <Subheader style={styles.login}>Existing Users</Subheader>
+        <Subheader style={styles.login}>Existing Users</Subheader>
           <div className="login-form-email">
-            <TextField fullWidth={true} hintText="Enter your Email" floatingLabelText="Email*" onChange = {(e,newValue) => this.setState({email:newValue})}/>
+           {this.state.toggleLoginError ? <TextField fullWidth={true} hintText="Enter your Email" floatingLabelText="Email*" onChange = {(e,newValue) => this.setState({email:newValue})}/> : <TextField fullWidth={true} hintText="Enter your Email" errorText="Invalid email or password" floatingLabelText="Email*" onChange = {(e,newValue) => this.setState({email:newValue})}/>}
           </div>
           <div className="login-form-password">
-            <TextField fullWidth={true} type="password" hintText="Enter your Password" floatingLabelText="Password*" onChange = {(e,newValue) => this.setState({password:newValue})}/>
+            {this.state.toggleLoginError ? <TextField fullWidth={true} type="password" hintText="Enter your Password" floatingLabelText="Password*" onChange = {(e,newValue) => this.setState({password:newValue})}/> : <TextField fullWidth={true} type="password" hintText="Enter your Password" errorText="Invalid email or password" floatingLabelText="Password*" onChange = {(e,newValue) => this.setState({password:newValue})}/>}
           </div>
           <div className="login-button">
             <RaisedButton label="Login" primary={true}  onClick={this.handleLogin}/>
