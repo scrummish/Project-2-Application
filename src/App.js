@@ -3,7 +3,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import SignInScreen from './SignInScreen'
 import WelcomeScreen from './WelcomeScreen.js';
-import './App.css';
+import './css/App.css';
 
 class App extends Component {
   constructor(){
