@@ -8,13 +8,9 @@ import IncidentMap from './IncidentMap'
 // import './App.css';
 
 import WelcomeScreen from './WelcomeScreen.js';
-<<<<<<< HEAD
 
 import './css/App.css';
 
-=======
-import './css/App.css';
->>>>>>> 62cc045a284aee7464784e9f6332d68eaceeeea0
 
 class App extends Component {
   constructor(){
