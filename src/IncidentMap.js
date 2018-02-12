@@ -32,7 +32,7 @@ class IncidentMap extends Component {
 			selectedPlace: "GA",
 			address: "444 N. Wabash, Chicago, Il",
 			latitudes: [41.89055],
-     		longitudes: [-87.626847]
+     		longitudes: [-87.626847],
      		center: {lat: 41.8781, lng: -87.6298},
       		zoom: 15
 

@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Subheader from 'material-ui/Subheader';
-<<<<<<< HEAD
-import './css/Login.css';
-=======
+
 import './login.css';
 
 const REQUEST = require('superagent');
->>>>>>> ffaf19bb84e23692f1f3bb9ccca6574f6e988966
+
 const styles = {
   login: {
     fontSize: "1.1em",

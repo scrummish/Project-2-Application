@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import SignInScreen from './SignInScreen'
-<<<<<<< HEAD
+
 import IncidentMap from './IncidentMap'
 
 // import './App.css';
-=======
+
 import WelcomeScreen from './WelcomeScreen.js';
-import './App.css';
->>>>>>> ffaf19bb84e23692f1f3bb9ccca6574f6e988966
+//import './App.css';
+
 
 class App extends Component {
   constructor(){
@@ -17,10 +17,9 @@ class App extends Component {
 
     this.state = {
      signedin: false,
-<<<<<<< HEAD
-=======
+
      toggleFormError: false
->>>>>>> ffaf19bb84e23692f1f3bb9ccca6574f6e988966
+
     }
   }
   loginSuccess = ()=>{
@@ -36,16 +35,15 @@ class App extends Component {
       
     
     return (
-      {this.state.signedin ? <IncidentMap />  : <SignInScreen loginSuccess={this.loginSuccess}/>}
       <div className="App">
-<<<<<<< HEAD
+
         
         
         
         
-=======
+
         {this.state.signedin ? <WelcomeScreen/> : <SignInScreen loginSuccess={this.loginSuccess} reRenderForm={this.reRenderForm} toggleFormError={this.state.toggleFormError}/>}
->>>>>>> ffaf19bb84e23692f1f3bb9ccca6574f6e988966
+
       </div>
     );
   }
