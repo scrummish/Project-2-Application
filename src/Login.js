@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Subheader from 'material-ui/Subheader';
+<<<<<<< HEAD
 
 import './css/login.css';
 
+=======
+import './css/login.css';
+>>>>>>> 62cc045a284aee7464784e9f6332d68eaceeeea0
 
 const REQUEST = require('superagent');
 
