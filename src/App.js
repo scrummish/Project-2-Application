@@ -8,7 +8,8 @@ import IncidentMap from './IncidentMap'
 // import './App.css';
 
 import WelcomeScreen from './WelcomeScreen.js';
-//import './App.css';
+
+import './css/App.css';
 
 
 class App extends Component {
@@ -35,14 +36,15 @@ class App extends Component {
       
     
     return (
+      // {this.state.signedin ? <WelcomeScreen/> : <SignInScreen loginSuccess={this.loginSuccess} reRenderForm={this.reRenderForm} toggleFormError={this.state.toggleFormError}/>}
       <div className="App">
 
         
-        
+        <IncidentMap />
         
         
 
-        {this.state.signedin ? <WelcomeScreen/> : <SignInScreen loginSuccess={this.loginSuccess} reRenderForm={this.reRenderForm} toggleFormError={this.state.toggleFormError}/>}
+        
 
       </div>
     );

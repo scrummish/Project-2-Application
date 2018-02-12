@@ -4,7 +4,7 @@ import GoogleMapReact from 'google-map-react'
 
 import nodeGeocode from 'node-geocoder'
 
-
+import './css/IncidentMap.css'
 const request = require('superagent');
 
 
