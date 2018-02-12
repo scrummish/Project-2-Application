@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import SignInScreen from './SignInScreen'
-import './WelcomeScreen.css';
+import './css/WelcomeScreen.css';
 
 class WelcomeScreen extends Component {
   constructor(){

@@ -3,6 +3,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Login from './Login'
 import Register from './Register'
+import snitchrlogo from './snitchrlogo.png';
 import './css/SignInScreen.css';
 
 
@@ -19,6 +20,8 @@ render() {
   return (
       <div className="sign-in-flex-container">
         <section id="sign-in-flex-child1" className="sign-in-flex-child">
+          <img src={snitchrlogo}/>
+          <p id="subtitle">be safe, be aware, be informed</p>
         </section>
         <section id="sign-in-flex-child2" className="sign-in-flex-child">
           <MuiThemeProvider muiTheme={getMuiTheme()}>

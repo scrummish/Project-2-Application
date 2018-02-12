@@ -7,8 +7,16 @@
 	width: 50%;
 }
 #sign-in-flex-child1 {
-	/*background-color: rgba(255, 25, 140, 0.35);*/
+	text-align: center;
+	margin-top: 2em;
 }
 #sign-in-flex-child2 {
 	
+}
+#subtitle {
+	margin: 0;
+    font-size: 1.2em;
+    color: rgb(0, 188, 212);
+    font-weight: 500;
+    background-color: white;
 }
