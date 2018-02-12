@@ -5,11 +5,11 @@ import Subheader from 'material-ui/Subheader';
 import './login.css';
 const styles = {
   login: {
-    "font-size": "1.1em",
+    fontSize: "1.1em",
     color: 'rgb(0, 188, 212)',
-    'padding-left': '0',
-    'margin-left': '5%',
-    'font-weight': '600',
+    paddingLeft: '0',
+    marginLeft: '5%',
+    fontWeight: '600',
   }
 };
 

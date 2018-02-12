@@ -8,21 +8,12 @@ import './SignInScreen.css';
 const REQUEST = require('superagent');
 
 class SignInScreen extends Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     
     this.state={
-
+      
     }
-  }
-  register = (formData)=>{
-      REQUEST.post('http://localhost:9292/user/')
-      .send(formData)
-      .end((err,createdUser)=>{
-          const parsedUser = JSON.parse(createdUser.text);
-          const registration_success_or_fail = parsedUser[2][1];
-          this.props.loginSuccess(registration_success_or_fail); 
-      })
   }
   login = (formData)=>{
       REQUEST.post('http://localhost:9292/user/login')
@@ -43,7 +34,7 @@ render() {
             <Login login={this.login}/>
           </MuiThemeProvider>
           <MuiThemeProvider muiTheme={getMuiTheme()}>
-            <Register register={this.register}/>
+            <Register register={this.register} toggleFormError={this.props.toggleFormError} loginSuccess={this.props.loginSuccess}/>
           </MuiThemeProvider>  
         </section>
       </div>
