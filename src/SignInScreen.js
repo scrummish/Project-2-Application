@@ -20,6 +20,15 @@ render() {
         <section id="sign-in-flex-child1" className="sign-in-flex-child">
           <img src={snitchrlogo}/>
           <p id="subtitle">be safe, be aware, be informed</p>
+          <div id="signin-cloud-container"> 
+            <div id="signin-cloud1"></div>
+            <div id="signin-cloud2"></div>
+            <div id="signin-cloud">
+            <p className="cloud-text" id="cloud-text-1">Know where the traffic accidents are</p>
+              <p className="cloud-text" id="cloud-text-2">Stay informed on crime in your area</p>
+              <p className="cloud-text" id="cloud-text-3">Know whats going on in the subway</p>
+            </div>
+          </div>
         </section>
         <section id="sign-in-flex-child2" className="sign-in-flex-child">
           <MuiThemeProvider muiTheme={getMuiTheme()}>

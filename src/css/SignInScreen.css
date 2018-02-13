@@ -29,13 +29,13 @@
 	z-index: 2;
 	top: -250px;
 	margin: 0 auto;
-	/*height: 200px;*/
+	height: 200px;
 	width: 600px; 
 	background: #f2f9fe;
-	background: linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
-	background: -webkit-linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
-	background: -moz-linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
-	background: -ms-linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
+	background: linear-gradient(top, white 5%, #d6f0fd 100%);
+	background: -webkit-linear-gradient(top, white 5%, #d6f0fd 100%);
+	background: -moz-linear-gradient(top, white 5%, #d6f0fd 100%);
+	background: -ms-linear-gradient(top, white 5%, #d6f0fd 100%);
 	background: -o-linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
 	border-radius: 100px;
 	-webkit-border-radius: 100px;
@@ -55,8 +55,80 @@
 	-webkit-border-radius: 200px;
 	-moz-border-radius: 200px;
 	position: relative;
+	background: white;
+	background: linear-gradient(top, white 50%, #d6f0fd 100%);
+}
+#signin-cloud-container {
+
+}
+#signin-cloud {
+	z-index: 2;
+	top: -300px;
+	margin: 0 auto;
+	height: 200px;
+	max-width: 500px; 
 	background: #f2f9fe;
-	background: linear-gradient(top, #f2f9fe 50%, #d6f0fd 100%);
+	background: linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
+	background: -webkit-linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
+	background: -moz-linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
+	background: -ms-linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
+	background: -o-linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
+	border-radius: 100px;
+	-webkit-border-radius: 100px;
+	-moz-border-radius: 100px;
+	position: relative;
+	text-align: center;
+}
+
+#signin-cloud1 {
+	margin: 0 auto;
+	z-index: 1;
+	top: 30px;
+	left: 80px;
+	max-width: 250px; 
+	height: 250px;
+	background: #f2f9fe;
+	border-radius: 250px;
+	-webkit-border-radius: 250px;
+	-moz-border-radius: 250px;
+	position: relative;
+}
+#signin-cloud2 {
+	margin: 0 auto;
+	z-index: 1;
+	right: 110px;
+	top: -180px;
+	max-width: 200px; 
+	height: 200px;
+	background: #f2f9fe;
+	border-radius: 200px;
+	-webkit-border-radius: 200px;
+	-moz-border-radius: 200px;
+	position: relative;
+} 
+#cloud-text-1 {
+	top: 53px;
+}
+#cloud-text-2 {
+	top: 133px;
+}
+#cloud-text-3 {
+	top: 93px;
+}
+.cloud-text{
+	background-color: white;
+    position: absolute;
+    height: 1.3em;
+    line-height: 1.6;
+    padding-left: 1em;
+    padding-left: .5em;
+    padding-right: .5em;
+    -webkit-box-shadow: 0.2em 0.1em 0.8em 0.19em #d6f0fd inset;
+    box-shadow: 0.2em 0.1em 0.8em 0.19em #d6f0fd inset;
+    font-weight: 600;
+    font-size: 1.4em;
+    left: 50px;
+    color: rgb(0, 188, 212);
 }
 #cloud2 {
 	margin: 0 auto;
@@ -65,20 +137,20 @@
 	top: -120px;
 	width: 200px; 
 	height: 200px;
-	background: #f2f9fe;
+	background: white;
 	border-radius: 200px;
 	-webkit-border-radius: 200px;
 	-moz-border-radius: 200px;
 	position: relative;
 }
 .modal-container{
-	background-color: rgba(0, 0, 0, 0.35);
+	background-color: rgba(0, 0, 0, 0.45);
 	width: 100%;
 	height: 100vh;
 }
 .modal-button{
-	margin-top: .4em;
+	margin-top: 4em;
     width: 40px;
     position: absolute;
-    margin-left: 29.9em;
+    margin-left: 27em;
 }

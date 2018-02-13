@@ -29,7 +29,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {this.state.signedin ? <IncidentMap/> : <SignInScreen loginSuccess={this.loginSuccess} reRenderForm={this.reRenderForm} toggleFormError={this.state.toggleFormError}/>}
+        {this.state.signedin ? <Modal/> : <SignInScreen loginSuccess={this.loginSuccess} reRenderForm={this.reRenderForm} toggleFormError={this.state.toggleFormError}/>}
       </div>
     );
   }
