@@ -32,8 +32,8 @@ class App extends Component {
     console.log(this.state.toggleFormError, "re rendered app.js")
   }
   getAddress = (address) => {
-    const state = this.state
-    state.setState({submissionAddress: address})
+    
+    this.setState({submissionAddress: address})
   }
   render() {
 

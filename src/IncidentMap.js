@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
 import APIKEY from './config.js'
 import GoogleMapReact from 'google-map-react'
-
-import nodeGeocode from 'node-geocoder'
-
 import './css/IncidentMap.css'
+
+
+
+
 const request = require('superagent');
+
+const geocoder = require('geocoder');
+
+
+
 
 
 
@@ -33,8 +39,8 @@ class IncidentMap extends Component {
 		this.state = {
 			selectedPlace: "GA",
 			submittedAddress: this.props.address,
-			latitudes: [41.89055],
-     		longitudes: [-87.626847],
+			latitudes: [],
+     		longitudes: [],
      		center: {lat: 41.8781, lng: -87.6298},
       		zoom: 15,
       		addressToBeGeocoded: ""
@@ -46,22 +52,35 @@ class IncidentMap extends Component {
 	//     zoom: 11
 	//   }
 	getLatitude = (latitude) => {
-	    const state = this.state
-	    state.setState({latitudes: [...this.state.latitudes, latitude]})
+	    console.log('this is latitude to be added to array', latitude)
+	    this.setState({latitudes: [...this.state.latitudes, latitude]})
+	     
 	}
 	getLongitude = (longitude) => {
-	    const state = this.state
-	    state.setState({longitudes: [...this.state.longitudes, longitude]})
+	    
+	    this.setState({longitudes: [...this.state.longitudes, longitude]})
+	    // console.log(this.state.longitudes)
 	}
 	getCoordinates = () => {
 
-		const geocoder = nodeGeocode(options)
 
-		geocoder.geocode(this.state.address, (error, response)=>{
-			console.log("This is the response for the geocoder", response)
-			this.getLatitude(response[0].latitude)
-			this.getLongitude(response[0].longitude)
-		})
+		 console.log('this is this.state.addressToBeGeocoded',this.state.addressToBeGeocoded)
+		geocoder.geocode(this.state.addressToBeGeocoded, (error, response )=>{
+  		        console.log("This is the response for the geocoder", response)
+				// console.log("this is the error for the geocoder", error)
+				this.getLatitude(response.results[0].geometry.location.lat)
+		 	    this.getLongitude(response.results[0].geometry.location.lng)
+				 // console.log('fud', response.results[0].geometry.location.lat)
+		   //       console.log('dsr', response.results[0].geometry.location.lng)
+			});
+
+		
+		 
+
+		 
+
+		 	
+
 
 	}
 	renderMarkers = (map, maps) => {
@@ -71,16 +90,21 @@ class IncidentMap extends Component {
       	});
 	}
 	handleChange = (e) =>{
-		console.log(e.currentTarget.value)
+		
 		this.setState({addressToBeGeocoded: e.currentTarget.value})
+		//console.log('this is e.currentTarget.value',e.currentTarget.value)
 
 	}
 	handleSubmit = (e) => {
 		e.preventDefault()
-		this.props.addFunction(this.state.addressToBeGeocoded);
-	
+		this.setState({addressToBeGeocoded: e.currentTarget.value});
+		//console.log('this is this.state.addressToBeGeocoded', this.state.addressToBeGeocoded)
+		this.getCoordinates();
+		
 	}
 	render() {
+		console.log(this.state.latitudes)
+		console.log(this.state.longitudes)
 
 
 		const style = {
@@ -106,7 +130,7 @@ class IncidentMap extends Component {
 	      <form>
 	      <span>
 	      <label>Enter an address:</label>
-	      <input type="text" value={this.state.addressToBeGeocoded} /> 
+	      <input type="text" value={this.state.addressToBeGeocoded} onChange={this.handleChange}/> 
 	      <button onClick={this.handleSubmit}>Submit</button>
 	      </span>
 	      </form>
