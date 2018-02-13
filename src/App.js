@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import SignInScreen from './SignInScreen'
-
+import ReportCrime from './ReportCrime'
 import IncidentMap from './IncidentMap'
 
 // import './App.css';
@@ -18,8 +18,8 @@ class App extends Component {
 
     this.state = {
      signedin: false,
-
-     toggleFormError: false
+     toggleFormError: false,
+     submissionAddress: ""
 
     }
   }
@@ -31,18 +31,22 @@ class App extends Component {
     this.setState({toggleFormError: true})
     console.log(this.state.toggleFormError, "re rendered app.js")
   }
+  getAddress = (address) => {
+    const state = this.state
+    state.setState({submissionAddress: address})
+  }
   render() {
 
       
     
     return (
-      // {this.state.signedin ? <WelcomeScreen/> : <SignInScreen loginSuccess={this.loginSuccess} reRenderForm={this.reRenderForm} toggleFormError={this.state.toggleFormError}/>}
+      // {this.state.signedin ? <IncidentMap /> : <SignInScreen loginSuccess={this.loginSuccess} reRenderForm={this.reRenderForm} toggleFormError={this.state.toggleFormError}/>}
       <div className="App">
 
         
-        <IncidentMap />
+        <IncidentMap address={this.state.submissionAddress}/>
         
-        
+        <ReportCrime getAddress={this.getAddress} />
 
         
 
