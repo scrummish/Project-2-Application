@@ -3,8 +3,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import SignInScreen from './SignInScreen'
 
-import ReportCrime from './ReportCrime'
-
 import IncidentMap from './IncidentMap'
 import './css/App.css';
 import Modal from './createReport'
@@ -32,23 +30,17 @@ class App extends Component {
   getAddress = (address) => {
     
     this.setState({submissionAddress: address})
-  }
+
+    }
   render() {
+
     return (
 
       
       <div className="App">
 
         
-        <IncidentMap address={this.state.submissionAddress}/>
-        
-        <ReportCrime getAddress={this.getAddress} />
-
-        
-
-
-      
-        {this.state.signedin ? <Modal/> : <SignInScreen loginSuccess={this.loginSuccess} reRenderForm={this.reRenderForm} toggleFormError={this.state.toggleFormError}/>}
+      {this.state.signedin ? <IncidentMap address={this.state.submissionAddress}/> : <SignInScreen loginSuccess={this.loginSuccess} reRenderForm={this.reRenderForm} toggleFormError={this.state.toggleFormError}/>}
 
       </div>
     );
