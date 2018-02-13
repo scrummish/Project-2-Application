@@ -3,8 +3,6 @@ import APIKEY from './config.js'
 import GoogleMapReact from 'google-map-react'
 import './css/IncidentMap.css'
 const request = require('superagent');
-const request = require('superagent');
-
 const geocoder = require('geocoder');
 
 

@@ -2,11 +2,6 @@ import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Subheader from 'material-ui/Subheader';
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 6bc772c6b74259a2ff6d41d87edf6248936f2a2f
 import './css/Login.css';
 
 
