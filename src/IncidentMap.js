@@ -2,28 +2,11 @@ import React, { Component } from 'react';
 import APIKEY from './config.js'
 import GoogleMapReact from 'google-map-react'
 import './css/IncidentMap.css'
-
-
-
-
+const request = require('superagent');
 const request = require('superagent');
 
 const geocoder = require('geocoder');
 
-
-
-
-
-
-
-const options = {
-  provider: 'google',
- 
-  
-  httpAdapter: 'https', 
-  apiKey: APIKEY, 
-  formatter: null        
-};
 
 const defaultMapCenter = {lat: 41.882059,lng: -87.627815};
 const defaultZoom = 11;
@@ -31,11 +14,7 @@ const defaultZoom = 11;
 class IncidentMap extends Component {
 	constructor(props){
 		super(props)
-  
-      
 
-    
- 
 		this.state = {
 			selectedPlace: "GA",
 			submittedAddress: this.props.address,
@@ -47,10 +26,6 @@ class IncidentMap extends Component {
 
 		}
 	}
-	// static defaultProps = {
-	//     center: {lat: 41.89055, lng: -87.626847},
-	//     zoom: 11
-	//   }
 	getLatitude = (latitude) => {
 	    console.log('this is latitude to be added to array', latitude)
 	    this.setState({latitudes: [...this.state.latitudes, latitude]})
@@ -144,17 +119,16 @@ class IncidentMap extends Component {
                  onGoogleApiLoaded={({map, maps}) => this.renderMarkers(map, maps)}
 				 >
 	        		<AnyReactComponent
+
 	        			lat={ 41.882059 }
 	        			lng={ -87.627815 }
 	        			text={ "Default Map Center at State and Madison" }
 	          		/>
+
 	        </GoogleMapReact>
 	      </div>
 	    )
-  
-
 	}
-
 }
 
 export default IncidentMap;
