@@ -4,8 +4,6 @@ import GoogleMapReact from 'google-map-react'
 import './css/IncidentMap.css'
 const request = require('superagent');
 const geocoder = require('geocoder');
-
-
 const defaultMapCenter = {lat: 41.882059,lng: -87.627815};
 const defaultZoom = 11;
 
