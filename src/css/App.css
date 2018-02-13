@@ -2,5 +2,6 @@
   background: white;
   background: linear-gradient(to bottom right,rgba(40, 240, 255, 0.19),rgba(40, 240, 255, 0.19),white,white,white,white, #ffffff, #ffffff);
   height: 100vh;
+  width: 100%;
   font-family: 'Raleway', sans-serif;
 }
