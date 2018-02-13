@@ -6,8 +6,6 @@ import Register from './Register'
 import snitchrlogo from './snitchrlogo.png';
 import './css/SignInScreen.css';
 
-
-
 class SignInScreen extends Component {
   constructor(props){
     super(props);

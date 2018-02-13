@@ -4,6 +4,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import SignInScreen from './SignInScreen'
 import IncidentMap from './IncidentMap'
 import './css/App.css';
+import Modal from './createReport'
 
 
 class App extends Component {
@@ -28,7 +29,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {this.state.signedin ? <IncidentMap /> : <SignInScreen loginSuccess={this.loginSuccess} reRenderForm={this.reRenderForm} toggleFormError={this.state.toggleFormError}/>}
+        {this.state.signedin ? <IncidentMap/> : <SignInScreen loginSuccess={this.loginSuccess} reRenderForm={this.reRenderForm} toggleFormError={this.state.toggleFormError}/>}
       </div>
     );
   }
