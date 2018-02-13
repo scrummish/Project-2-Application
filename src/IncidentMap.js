@@ -23,7 +23,6 @@ class IncidentMap extends Component {
      		longitudes: [-87.626847],
      		center: {lat: 41.8781, lng: -87.6298},
       		zoom: 15
-
 		}
 	}
 	static defaultProps = {
@@ -39,7 +38,6 @@ class IncidentMap extends Component {
 	    state.setState({longitudes: [...this.state.longitudes, longitude]})
 	}
 	getCoordinates = () => {
-
 		const geocoder = nodeGeocode(options)
 
 		geocoder.geocode(this.state.address, (error, response)=>{
@@ -47,7 +45,6 @@ class IncidentMap extends Component {
 			this.getLatitude(response[0].latitude)
 			this.getLongitude(response[0].longitude)
 		})
-
 	}
 	render() {
 		const AnyReactComponent = ({ text }) => <div>{ text }</div>;
