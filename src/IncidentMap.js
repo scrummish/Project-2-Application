@@ -5,7 +5,7 @@ import './css/IncidentMap.css'
 import Menu from './DrawerMenu'
 
 const request = require('superagent');
-const geocoder = require('geocoder');
+
 const defaultMapCenter = {lat: 41.882059,lng: -87.627815};
 const defaultZoom = 11;
 let APIcallURL = ""
@@ -58,7 +58,7 @@ class IncidentMap extends Component {
 			//	console.log('firstif triggered')
 				rootURL = rootURL + addressArray[i] + '+'
 			//	console.log('this is firstif address array length', addressArray.length)
-			} else if (i>0 && (i != addressArray.length-1)){
+			} else if (i>0 && (i !== addressArray.length-1)){
 			//	console.log('secondif triggered')
 				rootURL = rootURL + '+' + addressArray[i]
 			//	console.log('this is rootURL', rootURL)

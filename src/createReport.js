@@ -12,11 +12,11 @@ class Modal extends Component {
     super()
 
     this.state = {
-          addressToBeGeocoded: "",
-          addressLongitude: "",
-          addressLatitude: "",
-          incidentType: "",
-          incidentLocationDescription: ""
+      addressToBeGeocoded: "",
+      addressLongitude: "",
+      addressLatitude: "",
+      incidentType: "",
+      incidentLocationDescription: ""
     }
   }
   handleChangeIncidentType = (e)=>{
@@ -56,7 +56,7 @@ class Modal extends Component {
     this.makeNewDatabaseEntry(formData);
   }
   makeNewDatabaseEntry = (formData)=>{
-      REQUEST.post('http://localhost:9292/incedent/create')
+      REQUEST.post('http://localhost:9292/incident/create')
       .send(formData)
       .end((err,createdIncident)=>{
           this.props.handleClose();

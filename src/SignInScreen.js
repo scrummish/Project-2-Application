@@ -18,7 +18,7 @@ render() {
   return (
       <div className="sign-in-flex-container">
         <section id="sign-in-flex-child1" className="sign-in-flex-child">
-          <img src={snitchrlogo}/>
+          <img alt="Snitch logo" src={snitchrlogo}/>
           <p id="subtitle">be safe, be aware, be informed</p>
           <div id="signin-cloud-container"> 
             <div id="signin-cloud1"></div>
