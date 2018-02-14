@@ -8,6 +8,8 @@ const defaultMapCenter = {lat: 41.882059,lng: -87.627815};
 const defaultZoom = 11;
 let APIcallURL = ""
 
+const checkStringArray = ["west", "east", "north", "south", "w.", "n."]
+
 class IncidentMap extends Component {
 	constructor(props){
 		super(props)
@@ -22,8 +24,47 @@ class IncidentMap extends Component {
       		addressToBeGeocoded: ""
 		}
 	}
+	getURL = () => {
+	//	console.log('this is this.state.addressToBeGeocoded in get coord',this.state.addressToBeGeocoded);
+		const address = this.state.addressToBeGeocoded;
+		const addressArray = address.split(' ');
+	//	console.log('this is address array', addressArray)
+		let rootURL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+		const apiKeyURLending = "&key=" + APIKEY;
+	//	console.log('this is addressArray', addressArray)
+
+		for(let i = 0; i<addressArray.length; i++){
+			let noPlus = false
+			for(let j=0; j<checkStringArray.length; j++){
+				if(addressArray[i].toLowerCase() === checkStringArray[j].toLowerCase()){
+					noPlus = true
+				}
+			}
+			if(noPlus === true){
+				rootURL = rootURL + addressArray[i]
+				// i++;
+			} else if(i===0){
+			//	console.log('firstif triggered')
+				rootURL = rootURL + addressArray[i] + '+'
+			//	console.log('this is firstif address array length', addressArray.length)
+			} else if (i>0 && (i != addressArray.length-1)){
+			//	console.log('secondif triggered')
+				rootURL = rootURL + '+' + addressArray[i]
+			//	console.log('this is rootURL', rootURL)
+			//	console.log('this is i in secondif', i, 'when this is addressarray.length', addressArray.length)
+			} else if (i===addressArray.length-1){
+				rootURL = rootURL + '+' + addressArray[i]
+			//	console.log('thirdif triggered')
+			//	console.log('this is i in thirdif', i)
+				APIcallURL = rootURL + apiKeyURLending;
+				return APIcallURL
+			}
+		}
+
+
+	}
 	getLatitude = (latitude) => {
-	    console.log('this is latitude to be added to array', latitude)
+	    // console.log('this is latitude to be added to array', latitude)
 	    this.setState({latitudes: [...this.state.latitudes, latitude]})
 	     
 	}
@@ -33,22 +74,21 @@ class IncidentMap extends Component {
 	    // console.log(this.state.longitudes)
 	}
 	getCoordinates = () => {
-		console.log('this is this.state.addressToBeGeocoded',this.state.addressToBeGeocoded);
-		const address = this.state.addressToBeGeocoded;
-		const addressArray = address.split(' ');
+		console.log('this is the URL for the API call',this.getURL())
+		request
+			.get(this.getURL())
+			.end((error, response)=>{
+				const responseJSON = JSON.parse(response.text)
+			//	console.log('here is my JSON response',responseJSON)
 
-		const rootURL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
-		const apiKeyURLending = "&key=" + APIKEY;
+				const latitude = responseJSON.results[0].geometry.location.lat;
+				const longitude = responseJSON.results[0].geometry.location.lng;
+				this.getLatitude(latitude);
+				this.getLongitude(longitude);
 
-		for(let i = 0; i<address.length; i++){
-			if(i=0){
-				rootURL + addressArray[i]
-			} else if (i>0 && i != address.length){
-				rootURL + '+' + addressArray[i]
-			} else if (i===address.length){
-				APIcallURL = rootURL + apiKeyURLending;
-			}
-		}
+
+			})
+
 
 	}
 	renderMarkers = (map, maps, someObject) => {
@@ -73,14 +113,14 @@ class IncidentMap extends Component {
 		
 	}
 	render() {
-		this.state.latitudes.map((latitude, i)=>{
-			console.log('here are the latitudes',latitude)
-			console.log(' here are the longitudes' ,this.state.longitudes[i])
-		})
-		// console.log(this.state.latitudes)
-		// console.log(this.state.longitudes)
+		// this.state.latitudes.map((latitude, i)=>{
+		// 	console.log('here are the latitudes',latitude)
+		// 	console.log(' here are the longitudes' ,this.state.longitudes[i])
+		// })
+		console.log('HERE LIES MY LATITUDES', this.state.latitudes)
+		console.log('HERE LIES MY LONGITUDES', this.state.longitudes)
 
-		console.log(APIcallURL);
+		console.log('this is API callURL', APIcallURL);
 
 
 
