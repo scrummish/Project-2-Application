@@ -33,6 +33,12 @@ class Login extends Component {
     }
     this.login(loginData);
   }
+
+  handleKeyPress = (e)=>{
+    if(e.charCode === 13){
+        this.handleLogin();
+    }
+  }
   login = (formData)=>{
       REQUEST.post('http://localhost:9292/user/login')
       .send(formData)
@@ -49,7 +55,7 @@ class Login extends Component {
   }
 render() {
   return (
-      <div className="log-in-section"> 
+      <div className="log-in-section" onKeyPress={this.handleKeyPress}> 
         <Subheader style={styles.login}>Existing Users</Subheader>
           <div className="login-form-email">
            {this.state.toggleLoginError ? <TextField fullWidth={true} hintText="Enter your Email" floatingLabelText="Email*" onChange = {(e,newValue) => this.setState({email:newValue})}/> : <TextField fullWidth={true} hintText="Enter your Email" errorText="Invalid email or password" floatingLabelText="Email*" onChange = {(e,newValue) => this.setState({email:newValue})}/>}

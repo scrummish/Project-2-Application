@@ -35,9 +35,13 @@ class Modal extends Component {
     // The geocode method takes a vague address and returns information about that address ex. latitude and longitude
     geocoder.geocode(this.state.addressToBeGeocoded, (err,res)=>{
       // Saving the latitude and longitude in state
-      this.setState({addressLongitude: res.results[0].geometry.location.lng})
-      this.setState({addressLatitude: res.results[0].geometry.location.lat})
-      this.createFormData();
+        if (res.status === "ZERO_RESULTS"){
+          console.log("ZERO_RESULTS worked")
+        } else {
+          this.setState({addressLongitude: res.results[0].geometry.location.lng})
+          this.setState({addressLatitude: res.results[0].geometry.location.lat})
+          this.createFormData();
+        }
     })
   }
   createFormData = ()=>{
@@ -55,7 +59,6 @@ class Modal extends Component {
       REQUEST.post('http://localhost:9292/incedent/create')
       .send(formData)
       .end((err,createdIncident)=>{
-          console.log(createdIncident)
           this.props.handleClose();
       })
   }

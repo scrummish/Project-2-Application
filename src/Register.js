@@ -52,9 +52,14 @@ class Register extends Component {
           }
       })
   }
+  handleKeyPress = (e)=>{
+    if(e.charCode === 13){
+      this.createUser();
+    }
+  }
   render() {
     return (
-      <div className="log-in-section">
+      <div className="log-in-section" onKeyPress={this.handleKeyPress}>
             <br/>
             <Subheader style={styles.register}>New User?</Subheader>
             <div className="register-field">
