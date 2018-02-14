@@ -6,6 +6,7 @@ const request = require('superagent');
 const geocoder = require('geocoder');
 const defaultMapCenter = {lat: 41.882059,lng: -87.627815};
 const defaultZoom = 11;
+let APIcallURL = ""
 
 class IncidentMap extends Component {
 	constructor(props){
@@ -32,21 +33,31 @@ class IncidentMap extends Component {
 	    // console.log(this.state.longitudes)
 	}
 	getCoordinates = () => {
-		 console.log('this is this.state.addressToBeGeocoded',this.state.addressToBeGeocoded)
-		geocoder.geocode(this.state.addressToBeGeocoded, (error, response )=>{
-  		        console.log("This is the response for the geocoder", response)
-				// console.log("this is the error for the geocoder", error)
-				this.getLatitude(response.results[0].geometry.location.lat)
-		 	    this.getLongitude(response.results[0].geometry.location.lng)
-				 // console.log('fud', response.results[0].geometry.location.lat)
-		   //       console.log('dsr', response.results[0].geometry.location.lng)
-			});
+		console.log('this is this.state.addressToBeGeocoded',this.state.addressToBeGeocoded);
+		const address = this.state.addressToBeGeocoded;
+		const addressArray = address.split(' ');
+
+		const rootURL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+		const apiKeyURLending = "&key=" + APIKEY;
+
+		for(let i = 0; i<address.length; i++){
+			if(i=0){
+				rootURL + addressArray[i]
+			} else if (i>0 && i != address.length){
+				rootURL + '+' + addressArray[i]
+			} else if (i===address.length){
+				APIcallURL = rootURL + apiKeyURLending;
+			}
+		}
+
 	}
-	renderMarkers = (map, maps) => {
-  		const marker = new maps.Marker({        
-    	position: {lat: 41.890653, lng: -87.626988},
-    		map,
-      	});
+	renderMarkers = (map, maps, someObject) => {
+
+	  		const marker = new maps.Marker({ 	       
+	    	position: {lat: 41.890653, lng: -87.626988},
+	    		map,
+	      	});
+  		
 	}
 	handleChange = (e) =>{
 		
@@ -62,8 +73,15 @@ class IncidentMap extends Component {
 		
 	}
 	render() {
-		console.log(this.state.latitudes)
-		console.log(this.state.longitudes)
+		this.state.latitudes.map((latitude, i)=>{
+			console.log('here are the latitudes',latitude)
+			console.log(' here are the longitudes' ,this.state.longitudes[i])
+		})
+		// console.log(this.state.latitudes)
+		// console.log(this.state.longitudes)
+
+		console.log(APIcallURL);
+
 
 
 		const style = {
