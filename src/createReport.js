@@ -56,13 +56,18 @@ class Modal extends Component {
       .send(formData)
       .end((err,createdIncident)=>{
           console.log(createdIncident)
+          this.props.handleClose();
       })
   }
-
+  close = (e)=>{
+    if (e.target.className === "modal-container") {
+      this.props.handleClose();
+    }
+  }
 render() {
   return (
     <MuiThemeProvider muiTheme={getMuiTheme()}>
-      <div className="modal-container"> 
+      <div className="modal-container" onClick={this.close}> 
         <div id ="cloud1"></div>
         <div id ="cloud2"></div>
         <div id ="cloud">
