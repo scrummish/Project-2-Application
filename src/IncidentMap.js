@@ -79,7 +79,7 @@ class IncidentMap extends Component {
 			.get(this.getURL())
 			.end((error, response)=>{
 				const responseJSON = JSON.parse(response.text)
-			//	console.log('here is my JSON response',responseJSON)
+				console.log('here is my JSON response.results',responseJSON.results)
 
 				const latitude = responseJSON.results[0].geometry.location.lat;
 				const longitude = responseJSON.results[0].geometry.location.lng;
@@ -91,12 +91,14 @@ class IncidentMap extends Component {
 
 
 	}
-	renderMarkers = (map, maps, someObject) => {
+	renderMarkers = (map, maps,positionObject) => {
 
-	  		const marker = new maps.Marker({ 	       
-	    	position: {lat: 41.890653, lng: -87.626988},
-	    		map,
-	      	});
+	  		// const marker = new maps.Marker({ 	       
+	    // 	position: {lat: 41.890653, lng: -87.626988},
+	    // 		map,
+	    //   	});
+
+	      	const marker = new maps.Marker(positionObject);
   		
 	}
 	handleChange = (e) =>{
@@ -113,14 +115,17 @@ class IncidentMap extends Component {
 		
 	}
 	render() {
-		// this.state.latitudes.map((latitude, i)=>{
-		// 	console.log('here are the latitudes',latitude)
-		// 	console.log(' here are the longitudes' ,this.state.longitudes[i])
-		// })
-		console.log('HERE LIES MY LATITUDES', this.state.latitudes)
-		console.log('HERE LIES MY LONGITUDES', this.state.longitudes)
+		const markers = this.state.latitudes.map((latitude, i)=>{
+			console.log('here are the latitudes',latitude)
+			console.log(' here are the longitudes' ,this.state.longitudes[i])
+			return 
+		})
 
-		console.log('this is API callURL', APIcallURL);
+
+		// console.log('HERE LIES MY LATITUDES', this.state.latitudes)
+		// console.log('HERE LIES MY LONGITUDES', this.state.longitudes)
+
+		// console.log('this is API callURL', APIcallURL);
 
 
 
@@ -159,7 +164,8 @@ class IncidentMap extends Component {
 	                 language: 'en'
                  }}
                  onGoogleApiLoaded={({map, maps}) => this.renderMarkers(map, maps)}
-				 >
+				 >	
+				 	{markers}
 	        		<AnyReactComponent
 
 	        			lat={ 41.882059 }
