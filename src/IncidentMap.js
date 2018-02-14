@@ -10,6 +10,12 @@ const defaultMapCenter = {lat: 41.882059,lng: -87.627815};
 const defaultZoom = 11;
 let APIcallURL = ""
 
+const GAlatitude = 41.890653;
+
+const GAlongitude = -87.626988;
+
+
+
 const checkStringArray = ["west", "east", "north", "south", "w.", "n."]
 
 // I moved your form out the way, works like always just copy n paste it back in the render method like it was before
@@ -21,6 +27,11 @@ const checkStringArray = ["west", "east", "north", "south", "w.", "n."]
 	      // </span>
 	      // </form>
 
+	     //  const positionObject = { 	       
+	    	// position: {lat: 41.890653, lng: -87.626988},
+	    	// 	map,
+	     //  	}
+//{({map, maps, latitude, longitude}) => this.renderMarkers(map, maps, 41.890653, -87.626988)}
 class IncidentMap extends Component {
 	constructor(props){
 		super(props)
@@ -28,8 +39,8 @@ class IncidentMap extends Component {
 		this.state = {
 			selectedPlace: "GA",
 			submittedAddress: this.props.address,
-			latitudes: [],
-     		longitudes: [],
+			latitudes: [ 41.8781,41.881061, 41.868216],
+     		longitudes: [-87.6298,-87.643521,-87.624395],
      		center: {lat: 41.8781, lng: -87.6298},
       		zoom: 15,
       		addressToBeGeocoded: ""
@@ -74,6 +85,15 @@ class IncidentMap extends Component {
 
 
 	}
+	getCoordinates = {
+	  // request
+	  // 	.get('http://localhost:9292/incedent/create')
+   //    	.send(formData)
+   //    	.end((err,createdIncident)=>{
+   //        console.log(createdIncident)
+   //        this.props.handleClose();
+   //    })
+	}
 	getLatitude = (latitude) => {
 	    // console.log('this is latitude to be added to array', latitude)
 	    this.setState({latitudes: [...this.state.latitudes, latitude]})
@@ -102,14 +122,15 @@ class IncidentMap extends Component {
 
 
 	}
-	renderMarkers = (map, maps,positionObject) => {
+	renderMarkers = (map, maps, latitude, longitude) => {
+		console.log('this is latitude', latitude)
+		console.log('this is longitude', longitude)
+	  		const marker = new maps.Marker({ 	       
+	    	position: {lat: latitude , lng: longitude},
+	    		map,
+	      	});
 
-	  		// const marker = new maps.Marker({ 	       
-	    // 	position: {lat: 41.890653, lng: -87.626988},
-	    // 		map,
-	    //   	});
-
-	      	const marker = new maps.Marker(positionObject);
+	      	// const marker = new maps.Marker(positionObject);
   		
 	}
 	handleChange = (e) =>{
@@ -125,18 +146,17 @@ class IncidentMap extends Component {
 		this.getCoordinates();
 		
 	}
+	// test = ()=>{
+	// 	for (var i = 0; i < this.state.latitudes.length; i++) {
+	// 		console.log("I AM WORKING AS A CALLBACK", this.state.latitudes[i])
+	// 			(map, maps, latitude, longitude) => this.renderMarkers(map, maps, this.state.latitudes[i], this.state.longitudes[i])
+
+	// 	}
+	// }
+	
 	render() {
-		const markers = this.state.latitudes.map((latitude, i)=>{
-			console.log('here are the latitudes',latitude)
-			console.log(' here are the longitudes' ,this.state.longitudes[i])
-			return 
-		})
 
 
-		// console.log('HERE LIES MY LATITUDES', this.state.latitudes)
-		// console.log('HERE LIES MY LONGITUDES', this.state.longitudes)
-
-		// console.log('this is API callURL', APIcallURL);
 
 
 
@@ -169,9 +189,13 @@ class IncidentMap extends Component {
 	                 key: APIKEY,
 	                 language: 'en'
                  }}
-                 onGoogleApiLoaded={({map, maps}) => this.renderMarkers(map, maps)}
+                 onGoogleApiLoaded={({map, maps, latitude, longitude}) => {
+                 	for (var i = 0; i < this.state.latitudes.length; i++) {
+                 		this.renderMarkers(map, maps, this.state.latitudes[i], this.state.longitudes[i])
+                 	}
+                 }}
 				 >	
-				 	{markers}
+				 	
 	        		<AnyReactComponent
 
 	        			lat={ 41.882059 }
