@@ -8,6 +8,9 @@ const request = require('superagent');
 const geocoder = require('geocoder');
 const defaultMapCenter = {lat: 41.882059,lng: -87.627815};
 const defaultZoom = 11;
+let APIcallURL = ""
+
+const checkStringArray = ["west", "east", "north", "south", "w.", "n."]
 
 // I moved your form out the way, works like always just copy n paste it back in the render method like it was before
 	      // <form>
@@ -32,8 +35,47 @@ class IncidentMap extends Component {
       		addressToBeGeocoded: ""
 		}
 	}
+	getURL = () => {
+	//	console.log('this is this.state.addressToBeGeocoded in get coord',this.state.addressToBeGeocoded);
+		const address = this.state.addressToBeGeocoded;
+		const addressArray = address.split(' ');
+	//	console.log('this is address array', addressArray)
+		let rootURL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+		const apiKeyURLending = "&key=" + APIKEY;
+	//	console.log('this is addressArray', addressArray)
+
+		for(let i = 0; i<addressArray.length; i++){
+			let noPlus = false
+			for(let j=0; j<checkStringArray.length; j++){
+				if(addressArray[i].toLowerCase() === checkStringArray[j].toLowerCase()){
+					noPlus = true
+				}
+			}
+			if(noPlus === true){
+				rootURL = rootURL + addressArray[i]
+				// i++;
+			} else if(i===0){
+			//	console.log('firstif triggered')
+				rootURL = rootURL + addressArray[i] + '+'
+			//	console.log('this is firstif address array length', addressArray.length)
+			} else if (i>0 && (i != addressArray.length-1)){
+			//	console.log('secondif triggered')
+				rootURL = rootURL + '+' + addressArray[i]
+			//	console.log('this is rootURL', rootURL)
+			//	console.log('this is i in secondif', i, 'when this is addressarray.length', addressArray.length)
+			} else if (i===addressArray.length-1){
+				rootURL = rootURL + '+' + addressArray[i]
+			//	console.log('thirdif triggered')
+			//	console.log('this is i in thirdif', i)
+				APIcallURL = rootURL + apiKeyURLending;
+				return APIcallURL
+			}
+		}
+
+
+	}
 	getLatitude = (latitude) => {
-	    console.log('this is latitude to be added to array', latitude)
+	    // console.log('this is latitude to be added to array', latitude)
 	    this.setState({latitudes: [...this.state.latitudes, latitude]})
 	     
 	}
@@ -43,21 +85,32 @@ class IncidentMap extends Component {
 	    // console.log(this.state.longitudes)
 	}
 	getCoordinates = () => {
-		 console.log('this is this.state.addressToBeGeocoded',this.state.addressToBeGeocoded)
-		geocoder.geocode(this.state.addressToBeGeocoded, (error, response )=>{
-  		        console.log("This is the response for the geocoder", response)
-				// console.log("this is the error for the geocoder", error)
-				this.getLatitude(response.results[0].geometry.location.lat)
-		 	    this.getLongitude(response.results[0].geometry.location.lng)
-				 // console.log('fud', response.results[0].geometry.location.lat)
-		   //       console.log('dsr', response.results[0].geometry.location.lng)
-			});
+		console.log('this is the URL for the API call',this.getURL())
+		request
+			.get(this.getURL())
+			.end((error, response)=>{
+				const responseJSON = JSON.parse(response.text)
+				console.log('here is my JSON response.results',responseJSON.results)
+
+				const latitude = responseJSON.results[0].geometry.location.lat;
+				const longitude = responseJSON.results[0].geometry.location.lng;
+				this.getLatitude(latitude);
+				this.getLongitude(longitude);
+
+
+			})
+
+
 	}
-	renderMarkers = (map, maps) => {
-  		const marker = new maps.Marker({        
-    	position: {lat: 41.890653, lng: -87.626988},
-    		map,
-      	});
+	renderMarkers = (map, maps,positionObject) => {
+
+	  		// const marker = new maps.Marker({ 	       
+	    // 	position: {lat: 41.890653, lng: -87.626988},
+	    // 		map,
+	    //   	});
+
+	      	const marker = new maps.Marker(positionObject);
+  		
 	}
 	handleChange = (e) =>{
 		
@@ -73,8 +126,18 @@ class IncidentMap extends Component {
 		
 	}
 	render() {
-		console.log(this.state.latitudes)
-		console.log(this.state.longitudes)
+		const markers = this.state.latitudes.map((latitude, i)=>{
+			console.log('here are the latitudes',latitude)
+			console.log(' here are the longitudes' ,this.state.longitudes[i])
+			return 
+		})
+
+
+		// console.log('HERE LIES MY LATITUDES', this.state.latitudes)
+		// console.log('HERE LIES MY LONGITUDES', this.state.longitudes)
+
+		// console.log('this is API callURL', APIcallURL);
+
 
 
 		const style = {
@@ -107,7 +170,8 @@ class IncidentMap extends Component {
 	                 language: 'en'
                  }}
                  onGoogleApiLoaded={({map, maps}) => this.renderMarkers(map, maps)}
-				 >
+				 >	
+				 	{markers}
 	        		<AnyReactComponent
 
 	        			lat={ 41.882059 }
