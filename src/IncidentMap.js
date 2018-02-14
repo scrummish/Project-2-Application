@@ -9,6 +9,7 @@ const geocoder = require('geocoder');
 const defaultMapCenter = {lat: 41.882059,lng: -87.627815};
 const defaultZoom = 11;
 
+// I moved your form out the way, works like always just copy n paste it back in the render method like it was before
 	      // <form>
 	      // <span>
 	      // <label>Enter an address:</label>
