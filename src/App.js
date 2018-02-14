@@ -4,7 +4,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import SignInScreen from './SignInScreen'
 import IncidentMap from './IncidentMap'
 import './css/App.css';
-import Modal from './createReport'
 
 class App extends Component {
   constructor(){

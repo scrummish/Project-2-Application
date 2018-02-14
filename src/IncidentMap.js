@@ -2,10 +2,20 @@ import React, { Component } from 'react';
 import APIKEY from './config.js'
 import GoogleMapReact from 'google-map-react'
 import './css/IncidentMap.css'
+import Menu from './DrawerMenu'
+
 const request = require('superagent');
 const geocoder = require('geocoder');
 const defaultMapCenter = {lat: 41.882059,lng: -87.627815};
 const defaultZoom = 11;
+
+	      // <form>
+	      // <span>
+	      // <label>Enter an address:</label>
+	      // <input type="text" value={this.state.addressToBeGeocoded} onChange={this.handleChange}/> 
+	      // <button onClick={this.handleSubmit}>Submit</button>
+	      // </span>
+	      // </form>
 
 class IncidentMap extends Component {
 	constructor(props){
@@ -86,13 +96,8 @@ class IncidentMap extends Component {
 		const AnyReactComponent = ({ text }) => <div>{ text }</div>;
 	    return (
 	      <div className='google-map'>
-	      <form>
-	      <span>
-	      <label>Enter an address:</label>
-	      <input type="text" value={this.state.addressToBeGeocoded} onChange={this.handleChange}/> 
-	      <button onClick={this.handleSubmit}>Submit</button>
-	      </span>
-	      </form>
+	      <Menu/>
+
 	        <GoogleMapReact
 	       		 defaultCenter={defaultMapCenter}
 	       		 defaultZoom={ defaultZoom }
