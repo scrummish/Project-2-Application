@@ -37,22 +37,30 @@ class Modal extends Component {
     // Saving the users input in state
     this.setState({addressToBeGeocoded: e.currentTarget.value})
   }
+  
+  // Converts address stored in state to latitude and longitude
   getCoordinates = ()=>{
-    // The geocode method takes a vague address and returns information about that address ex. latitude and longitude
     geocoder.geocode(this.state.addressToBeGeocoded, (err,res)=>{
       // Saving the latitude and longitude in state
         if (res.status === "ZERO_RESULTS"){
           console.log("ZERO_RESULTS worked")
         } else {
-          this.setState({addressLongitude: res.results[0].geometry.location.lng})
-          this.setState({addressLatitude: res.results[0].geometry.location.lat})
+          console.log('this is the response for geocoder', res)
+          const state = this.state;
+
+          
+          this.setState({
+            addressLongitude: res.results[0].geometry.location.lng, 
+            addressLatitude: res.results[0].geometry.location.lat
+          });
           this.createFormData();
         }
     })
   }
+
+  // After the geocode method retrieves the lat and long, we create an object with the data needed for the database entry
   createFormData = ()=>{
     console.log(this.props.userId, "the user id in createform")
-    // After the geocode method retrieves the lat and long, we create an object with the data needed for the database entry
     const formData = {
       approximateAddress: this.state.addressToBeGeocoded,
       addressLongitude: this.state.addressLongitude,
@@ -68,9 +76,20 @@ class Modal extends Component {
       REQUEST.post('http://localhost:9292/incident/create')
       .send(formData)
       .end((err,createdIncident)=>{
+          console.log(createdIncident)
           this.props.handleClose();
+
+          // call function here to add incident to the state in incident map.js
+          // this function will come from/through Drawer parent
+          const parsedResponse = JSON.parse(createdIncident.text)
+          this.props.addCoordinate(parsedResponse.latitude, parsedResponse.longitude)
+
+          // this.props.toggleState();
       })
+
   }
+
+
   close = (e)=>{
     if (e.target.className === "modal-container") {
       this.props.handleClose();
