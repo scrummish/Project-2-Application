@@ -17,12 +17,17 @@ class Modal extends Component {
       addressLatitude: "",
       incidentType: "",
       incidentLocationDescription: "",
+      incidentDetails: "",
       userId: this.props.userId
     }
   }
   handleChangeIncidentType = (e)=>{
     // Saving the users input in state
     this.setState({incidentType: e.currentTarget.value})
+  }
+  handleChangeIncidentDetails = (e)=>{
+    // Saving the users input in state
+    this.setState({incidentDetails: e.currentTarget.value})
   }
   handleChangeIncidentLocationDescription = (e)=>{
     // Saving the users input in state
@@ -53,6 +58,7 @@ class Modal extends Component {
       addressLongitude: this.state.addressLongitude,
       addressLatitude: this.state.addressLatitude,
       incidentType: this.state.incidentType,
+      incidentDetails: this.state.incidentDetails,
       incidentLocationDescription: this.state.incidentLocationDescription,
       userId: this.state.userId
     }
@@ -78,10 +84,13 @@ render() {
         <div id ="cloud2"></div>
         <div id ="cloud">
           <div className="cloud-field">
-             <TextField value={this.state.incidentType} onChange={this.handleChangeIncidentType} fullWidth={true} hintText="Type of incident" floatingLabelText="Incident *"/>
+             <TextField value={this.state.incidentType} onChange={this.handleChangeIncidentType} fullWidth={true} hintText="Type of crime" floatingLabelText="Incident *"/>
           </div>
           <div className="cloud-field">
-             <TextField value={this.state.incidentLocationDescription} onChange={this.handleChangeIncidentLocationDescription} fullWidth={true} hintText="Location Description" floatingLabelText="Description"/>
+             <TextField value={this.state.incidentDetails} onChange={this.handleChangeIncidentDetails} fullWidth={true} hintText="Details of the incident" floatingLabelText="Detailed Snitch *"/>
+          </div>
+          <div className="cloud-field">
+             <TextField value={this.state.incidentLocationDescription} onChange={this.handleChangeIncidentLocationDescription} fullWidth={true} hintText="Location Description" floatingLabelText="Location Details"/>
           </div>
           <div className="cloud-field">
              <TextField value={this.state.addressToBeGeocoded} onChange={this.handleChangeAddressToBeGeocoded} fullWidth={true} hintText="Enter the incidents address" floatingLabelText="Address *"/>
