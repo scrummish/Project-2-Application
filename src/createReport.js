@@ -8,15 +8,16 @@ const geocoder = require('geocoder');
 const REQUEST = require('superagent');
 
 class Modal extends Component {
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
 
     this.state = {
       addressToBeGeocoded: "",
       addressLongitude: "",
       addressLatitude: "",
       incidentType: "",
-      incidentLocationDescription: ""
+      incidentLocationDescription: "",
+      userId: this.props.userId
     }
   }
   handleChangeIncidentType = (e)=>{
@@ -45,13 +46,15 @@ class Modal extends Component {
     })
   }
   createFormData = ()=>{
+    console.log(this.props.userId, "the user id in createform")
     // After the geocode method retrieves the lat and long, we create an object with the data needed for the database entry
     const formData = {
       approximateAddress: this.state.addressToBeGeocoded,
       addressLongitude: this.state.addressLongitude,
       addressLatitude: this.state.addressLatitude,
       incidentType: this.state.incidentType,
-      incidentLocationDescription: this.state.incidentLocationDescription
+      incidentLocationDescription: this.state.incidentLocationDescription,
+      userId: this.state.userId
     }
     this.makeNewDatabaseEntry(formData);
   }

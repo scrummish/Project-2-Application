@@ -12,13 +12,13 @@ class App extends Component {
     this.state = {
      signedin: false,
      toggleFormError: false,
-     submissionAddress: ""
-
+     submissionAddress: "",
+     userId: ""
     }
   }
   
-  loginSuccess = ()=>{
-    this.setState({signedin: true})
+  loginSuccess = (param)=>{
+    this.setState({signedin: true, userId: param})
   }
   reRenderForm = ()=>{
     console.log(this.state.toggleFormError, "un rendered app.js")
@@ -33,7 +33,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {this.state.signedin ? <IncidentMap address={this.state.submissionAddress}/> : <SignInScreen loginSuccess={this.loginSuccess} reRenderForm={this.reRenderForm} toggleFormError={this.state.toggleFormError}/>}
+        {this.state.signedin ? <IncidentMap userId={this.state.userId} address={this.state.submissionAddress}/> : <SignInScreen loginSuccess={this.loginSuccess} reRenderForm={this.reRenderForm} toggleFormError={this.state.toggleFormError}/>}
       </div>
     );
   }

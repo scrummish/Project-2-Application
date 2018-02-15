@@ -26,7 +26,8 @@ class Login extends Component {
       toggleLoginError: true
     }
   }
-  handleLogin = ()=>{
+  handleLogin = (e)=>{
+    e.preventDefault();
     const loginData = {
       email: this.state.email,
       password: this.state.password
@@ -47,7 +48,8 @@ class Login extends Component {
         const registration_success_or_fail = parsedUser[2][1];
       
         if (registration_success_or_fail === true) {
-          this.props.loginSuccess();
+          console.log(parsedUser[4][1])
+          this.props.loginSuccess(parsedUser[4][1]);
         } else {
           this.setState({toggleLoginError: false})
         }

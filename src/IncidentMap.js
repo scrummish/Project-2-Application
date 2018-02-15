@@ -180,7 +180,7 @@ class IncidentMap extends Component {
 		const AnyReactComponent = ({ text }) => <div>{ text }</div>;
 	    return (
 	      <div className='google-map'>
-	      <Menu/>
+	      <Menu userId={this.props.userId}/>
 
 	        <GoogleMapReact
 	       		 defaultCenter={defaultMapCenter}
@@ -191,6 +191,7 @@ class IncidentMap extends Component {
                  }}
                  onGoogleApiLoaded={({map, maps, latitude, longitude}) => {
                  	for (var i = 0; i < this.state.latitudes.length; i++) {
+                 		console.log(this.props.userId)
                  		this.renderMarkers(map, maps, this.state.latitudes[i], this.state.longitudes[i])
                  	}
                  }}

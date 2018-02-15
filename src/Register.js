@@ -47,8 +47,7 @@ class Register extends Component {
           if (parsedUser === "false") {
             this.setState({toggleEmailError: true})
           } else {
-            const registration_success_or_fail = parsedUser[2][1];
-            this.props.loginSuccess(registration_success_or_fail); 
+            this.props.loginSuccess(parsedUser[4][1]); 
           }
       })
   }

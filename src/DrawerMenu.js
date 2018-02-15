@@ -24,7 +24,10 @@ class DrawerMenu extends Component {
   handleToggle = () => this.setState({open: !this.state.open});
 
   
-  handleEdit = () => this.setState({open: false, edit: true});
+  handleEdit = () =>{
+    this.setState({open: false, edit: true});
+    console.log(this.props.userId)
+  } 
   handleClose = () => this.setState({edit: !this.state.edit});
 
   render() {
@@ -40,7 +43,7 @@ class DrawerMenu extends Component {
   	          <MenuItem onClick={this.handleEdit}>Report an Incident</MenuItem>
   	        </Drawer>
   	    </MuiThemeProvider>
-        {this.state.edit ?  <Modal handleClose={this.handleClose}/> : null}
+        {this.state.edit ?  <Modal userId={this.props.userId} handleClose={this.handleClose}/> : null}
       </div>
     );
   }
