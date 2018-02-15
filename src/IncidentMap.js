@@ -116,6 +116,7 @@ class IncidentMap extends Component {
 	// }
 
 	addCoordinate = (lat, long) => {
+		
 		console.log("addCoordinate called with lat " + lat + " and long " + long);
 		this.setState({
 			latitudes: [...this.state.latitudes, lat],
@@ -129,7 +130,7 @@ class IncidentMap extends Component {
 			.end((error, response)=>{
 				const responseJSON = JSON.parse(response.text)
 				console.log('here is my JSON response.results',responseJSON.results)
-
+				console.log('THIS IS MY ERROR', error)
 				const latitude = responseJSON.results[0].geometry.location.lat;
 				const longitude = responseJSON.results[0].geometry.location.lng;
 				// this.getLatitude(latitude);
@@ -254,7 +255,7 @@ class IncidentMap extends Component {
 			const maps = this.state.maps
 			const map = this.state.map
 			
-			
+
 			const markers = this.state.latitudes.map((lat, i) => {
 				return  new maps.Marker({ 	       
 			    	position: {lat: lat, lng: this.state.longitudes[i]},

@@ -4,8 +4,10 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import RaisedButton from 'material-ui/RaisedButton';
 
-const geocoder = require('geocoder');
-const REQUEST = require('superagent');
+import APIKEY from './config.js'
+
+
+const request = require('superagent');
 
 class Modal extends Component {
   constructor(props){
@@ -39,23 +41,41 @@ class Modal extends Component {
   }
   
   // Converts address stored in state to latitude and longitude
-  getCoordinates = ()=>{
-    geocoder.geocode(this.state.addressToBeGeocoded, (err,res)=>{
-      // Saving the latitude and longitude in state
-        if (res.status === "ZERO_RESULTS"){
-          console.log("ZERO_RESULTS worked")
-        } else {
-          console.log('this is the response for geocoder', res)
-          const state = this.state;
-
-          
-          this.setState({
-            addressLongitude: res.results[0].geometry.location.lng, 
-            addressLatitude: res.results[0].geometry.location.lat
-          });
-          this.createFormData();
-        }
+  getURL = (address) => {
+    const rootURL = "https://maps.googleapis.com/maps/api/geocode/json?address="
+    const apiKeyURLending = "&key=" + APIKEY;
+    const completeURL = rootURL + address + apiKeyURLending
+    return completeURL
+  }
+  addCoordinate = (lat, long) => {
+    
+    console.log("addCoordinate called with lat " + lat + " and long " + long);
+    console.log('this is this.addresslatitude', this.state.addressLatitude)
+    console.log('this is this.addresslongitude', this.state.addressLongitude)
+    this.setState({
+      addressLatitude: lat,
+      addressLongitude: long
     })
+    this.createFormData()
+  }
+  getCoordinates = ()=>{
+    request
+      .get(this.getURL(this.state.addressToBeGeocoded))
+      .end((error, response)=>{
+        const responseJSON = JSON.parse(response.text)
+        console.log('here is my JSON response.results',responseJSON.results)
+        console.log('THIS IS MY ERROR', error)
+        if(responseJSON.results.length===0){
+          console.log('fake address error')
+        } else {
+        const latitude = responseJSON.results[0].geometry.location.lat;
+        const longitude = responseJSON.results[0].geometry.location.lng;
+        // this.getLatitude(latitude);
+        // this.getLongitude(longitude);
+        this.addCoordinate(latitude, longitude)
+      }
+
+      })
   }
 
   // After the geocode method retrieves the lat and long, we create an object with the data needed for the database entry
@@ -73,7 +93,7 @@ class Modal extends Component {
     this.makeNewDatabaseEntry(formData);
   }
   makeNewDatabaseEntry = (formData)=>{
-      REQUEST.post('http://localhost:9292/incident/create')
+      request.post('http://localhost:9292/incident/create')
       .send(formData)
       .end((err,createdIncident)=>{
           console.log(createdIncident)
