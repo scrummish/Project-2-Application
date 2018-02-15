@@ -6,6 +6,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Modal from './createReport'
 import ShowIncidents from './ShowIncidents'
+import Divider from 'material-ui/Divider';
 
 const style = {
   position: "absolute",
@@ -45,6 +46,8 @@ class DrawerMenu extends Component {
   	          onRequestChange={(open) => this.setState({open})}>
   	          <MenuItem onClick={this.handleModal}>Report an Incident</MenuItem>
               <MenuItem onClick={this.handleIncident}>See My Incidents</MenuItem>
+              <Divider />
+              <MenuItem>Edit Profile</MenuItem>
   	        </Drawer>
   	    </MuiThemeProvider>
         {this.state.modal ?  <Modal userId={this.props.userId} handleClose={this.handleModalToggle}/> : null}

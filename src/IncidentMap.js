@@ -18,14 +18,6 @@ const GAlongitude = -87.626988;
 
 const checkStringArray = ["west", "east", "north", "south", "w.", "n."]
 
-// I moved your form out the way, works like always just copy n paste it back in the render method like it was before
-	      // <form>
-	      // <span>
-	      // <label>Enter an address:</label>
-	      // <input type="text" value={this.state.addressToBeGeocoded} onChange={this.handleChange}/> 
-	      // <button onClick={this.handleSubmit}>Submit</button>
-	      // </span>
-	      // </form>
 
 	     //  const positionObject = { 	       
 	    	// position: {lat: 41.890653, lng: -87.626988},
@@ -182,16 +174,13 @@ class IncidentMap extends Component {
 	      <div className='google-map'>
 	      <Menu userId={this.props.userId}/>
 
-	        <GoogleMapReact
-	       		 defaultCenter={defaultMapCenter}
-	       		 defaultZoom={ defaultZoom }
+	        <GoogleMapReact defaultCenter={defaultMapCenter} defaultZoom={ defaultZoom }
 	       		 bootstrapURLKeys={{
 	                 key: APIKEY,
 	                 language: 'en'
                  }}
                  onGoogleApiLoaded={({map, maps, latitude, longitude}) => {
                  	for (var i = 0; i < this.state.latitudes.length; i++) {
-                 		console.log(this.props.userId)
                  		this.renderMarkers(map, maps, this.state.latitudes[i], this.state.longitudes[i])
                  	}
                  }}

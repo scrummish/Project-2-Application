@@ -27,14 +27,12 @@ class Login extends Component {
     }
   }
   handleLogin = (e)=>{
-    e.preventDefault();
     const loginData = {
       email: this.state.email,
       password: this.state.password
     }
     this.login(loginData);
   }
-
   handleKeyPress = (e)=>{
     if(e.charCode === 13){
         this.handleLogin();

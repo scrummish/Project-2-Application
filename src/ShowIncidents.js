@@ -25,61 +25,38 @@ const styles = {
   },
 };
 
-const tableData = [
-  {
-    name: 'John Smith',
-    status: 'Employed',
-  },
-  {
-    name: 'Randal White',
-    status: 'Unemployed',
-  },
-  {
-    name: 'Stephanie Sanders',
-    status: 'Employed',
-  },
-  {
-    name: 'Steve Brown',
-    status: 'Employed',
-  },
-  {
-    name: 'Joyce Whitten',
-    status: 'Employed',
-  },
-  {
-    name: 'Samuel Roberts',
-    status: 'Employed',
-  },
-  {
-    name: 'Adam Moore',
-    status: 'Employed',
-  },
-];
-
 class IncidentTable extends Component {
   constructor() {
     super();
 
     this.state = {
       height: '600',
-      collectedIncidents: ''
+      collectedIncidents: '',
+      checkedRows: '',
+      deleteIncidents: false
     }
   }
 
   handleChange = (event) => {
     this.setState({height: event.target.value});
-  };
-  retrieveIncidents = ()=>{
-
+  }
+  handleDeletes = (id)=>{
+      REQUEST.delete('http://localhost:9292/incident/delete/'+id)
+      .end((err,returnedData)=>{
+        this.props.handleClose();
+      })
+  }
+  handleChecked = (e)=>{
+    const id = this.state.collectedIncidents[e[0]].props.id;
+      this.handleDeletes(id)
   }
   componentDidMount(){
       REQUEST.get('http://localhost:9292/incident/'+this.props.userId+'/myIncidents')
       .end((err,returnedData)=>{
         const parsedData = JSON.parse(returnedData.text);
-        console.log(parsedData.incidents);
         const parsedIncidents = parsedData.incidents;
         const tableRows = parsedIncidents.map( (row, index) => (
-                <TableRow key={index}>
+                <TableRow key={index} id={row.id}>
                   <TableRowColumn>{index}</TableRowColumn>
                   <TableRowColumn>{row.type_of_incident}</TableRowColumn>
                   <TableRowColumn>{row.incident_details}</TableRowColumn>
@@ -94,7 +71,7 @@ class IncidentTable extends Component {
     return (
       <div style={{position: 'relative', zIndex: 2000}}>
         <MuiThemeProvider muiTheme={getMuiTheme()}>
-          <Table height={this.state.height} fixedHeader={true} selectable={true} multiSelectable={true} >
+          <Table height={this.state.height} fixedHeader={true} selectable={true} multiSelectable={true}  onRowSelection={this.handleChecked} >
             <TableHeader displaySelectAll={true} adjustForCheckbox={true} enableSelectAll={true}>
               <TableRow>
                 <TableHeaderColumn colSpan="5" style={{textAlign: 'center'}}>
@@ -113,7 +90,7 @@ class IncidentTable extends Component {
               {this.state.collectedIncidents}
             </TableBody>
           </Table>
-          <RaisedButton label="SUBMIT"/>
+          <RaisedButton primary={true} onClick={this.props.handleClose} label="EXIT" style={{}} />
         </MuiThemeProvider>
       </div>
     );

@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 const geocoder = require('geocoder');
 const REQUEST = require('superagent');
 
-class Modal extends Component {
+class createReport extends Component {
   constructor(props){
     super(props)
 
@@ -44,23 +44,22 @@ class Modal extends Component {
         if (res.status === "ZERO_RESULTS"){
           console.log("ZERO_RESULTS worked")
         } else {
-          this.setState({addressLongitude: res.results[0].geometry.location.lng})
-          this.setState({addressLatitude: res.results[0].geometry.location.lat})
+          this.setState({addressLongitude: res.results[0].geometry.location.lng, addressLatitude: res.results[0].geometry.location.lat})
           this.createFormData();
         }
     })
   }
   createFormData = ()=>{
-    console.log(this.props.userId, "the user id in createform")
+    const state = this.state
     // After the geocode method retrieves the lat and long, we create an object with the data needed for the database entry
     const formData = {
-      approximateAddress: this.state.addressToBeGeocoded,
-      addressLongitude: this.state.addressLongitude,
-      addressLatitude: this.state.addressLatitude,
-      incidentType: this.state.incidentType,
-      incidentDetails: this.state.incidentDetails,
-      incidentLocationDescription: this.state.incidentLocationDescription,
-      userId: this.state.userId
+      approximateAddress: state.addressToBeGeocoded,
+      addressLongitude: state.addressLongitude,
+      addressLatitude: state.addressLatitude,
+      incidentType: state.incidentType,
+      incidentDetails: state.incidentDetails,
+      incidentLocationDescription: state.incidentLocationDescription,
+      userId: state.userId
     }
     this.makeNewDatabaseEntry(formData);
   }
@@ -71,7 +70,8 @@ class Modal extends Component {
           this.props.handleClose();
       })
   }
-  close = (e)=>{
+  // This lets you close the modal by clicking anywhere around it
+  closeModal = (e)=>{
     if (e.target.className === "modal-container") {
       this.props.handleClose();
     }
@@ -79,7 +79,7 @@ class Modal extends Component {
 render() {
   return (
     <MuiThemeProvider muiTheme={getMuiTheme()}>
-      <div className="modal-container" onClick={this.close}> 
+      <div className="modal-container" onClick={this.closeModal}> 
         <div id ="cloud1"></div>
         <div id ="cloud2"></div>
         <div id ="cloud">
@@ -104,4 +104,4 @@ render() {
     );
   }
 }
-export default Modal;
+export default createReport;
