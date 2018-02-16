@@ -99,9 +99,9 @@ class createReport extends Component {
           //   console.log('CREATEREPORT err------',err);
           //   this.props.handleClose();
           // } 
-          console.log(createdIncident)
-          // const parsedResponse = JSON.parse(createdIncident.text)
-          // console.log(parsedResponse)
+          // console.log(createdIncident.text)
+          const parsedResponse = JSON.parse(createdIncident.text)
+          console.log(parsedResponse)
           // this.props.addCoordinate(parsedResponse.latitude, parsedResponse.longitude)
       })
 
