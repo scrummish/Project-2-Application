@@ -48,7 +48,7 @@ class Login extends Component {
         const registration_success_or_fail = parsedUser[1][1];
       
         if (registration_success_or_fail === true) {
-          console.log(parsedUser[4][1])
+          console.log("user id if it exists in login.js ", parsedUser[4][1])
           this.props.loginSuccess(parsedUser[4][1]);
         } else {
           this.setState({toggleLoginError: false})

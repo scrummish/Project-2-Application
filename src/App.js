@@ -17,9 +17,9 @@ class App extends Component {
     }
   }
   
-  loginSuccess = (param)=>{
-    console.log(param);
-    this.setState({signedin: true, userId: param})
+  loginSuccess = (id)=>{
+    console.log(id);
+    this.setState({signedin: true, userId: id})
   }
   reRenderForm = ()=>{
     console.log(this.state.toggleFormError, "un rendered app.js")
