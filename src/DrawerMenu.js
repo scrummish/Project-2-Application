@@ -53,6 +53,7 @@ class DrawerMenu extends Component {
   	          onRequestChange={(open) => this.setState({open})}>
   	          <MenuItem onClick={this.handleModal}>Report an Incident</MenuItem>
               <MenuItem onClick={this.handleIncident}>See My Incidents</MenuItem>
+              <Divider/>
               <MenuItem onClick={this.handleEditUser}>Edit Profile</MenuItem>
   	        </Drawer>
   	    </MuiThemeProvider>
