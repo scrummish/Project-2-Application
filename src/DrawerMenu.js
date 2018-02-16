@@ -7,7 +7,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Modal from './createReport'
 import ShowIncidents from './ShowIncidents'
 import Divider from 'material-ui/Divider';
-import EditUser from './EditUser'
 
 const style = {
   position: "absolute",
