@@ -96,6 +96,7 @@ class createReport extends Component {
       request.post('https://afternoon-anchorage-72517.herokuapp.com/incident/create')
       .send(formData)
       .end((err,createdIncident)=>{
+          if(err) console.log(err);
           console.log(createdIncident)
           this.props.handleClose();
 
@@ -103,8 +104,6 @@ class createReport extends Component {
           // this function will come from/through Drawer parent
           const parsedResponse = JSON.parse(createdIncident.text)
           this.props.addCoordinate(parsedResponse.latitude, parsedResponse.longitude)
-
-          // this.props.toggleState();
       })
 
   }
