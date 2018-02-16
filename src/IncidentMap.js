@@ -62,7 +62,7 @@ class IncidentMap extends Component {
 
 		let responseJSON = []
 		request
-			.get('http://localhost:9292/incident')
+			.get('https://desolate-sierra-97938.herokuapp.com/incident')
 			.end((error, response)=>{
 				responseJSON = JSON.parse(response.text)
 				const state = this.state;
