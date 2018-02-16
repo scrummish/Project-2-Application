@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import APIKEY from './config.js'
 import GoogleMapReact from 'google-map-react'
 import './css/IncidentMap.css'
-import Menu from './DrawerMenu'
+import DrawerMenu from './DrawerMenu'
 
 const request = require('superagent');
 
@@ -31,13 +31,18 @@ class IncidentMap extends Component {
 		this.state = {
 			selectedPlace: "GA",
 			submittedAddress: this.props.address,
-			latitudes: [ 41.8781,41.881061, 41.868216],
-     		longitudes: [-87.6298,-87.643521,-87.624395],
+			latitudes: [],
+     		longitudes: [],
      		center: {lat: 41.8781, lng: -87.6298},
       		zoom: 15,
-      		addressToBeGeocoded: ""
+      		addressToBeGeocoded: "",
+      		reRender: false,
+      		markers: [],
+      		map: '',
+      		maps: ''
 		}
 	}
+
 	getURL = () => {
 	//	console.log('this is this.state.addressToBeGeocoded in get coord',this.state.addressToBeGeocoded);
 		const address = this.state.addressToBeGeocoded;
@@ -77,6 +82,11 @@ class IncidentMap extends Component {
 
 
 	}
+	toggleState = () => {
+		console.log('before toggling set state rerender', this.state.reRender)
+		this.setState({reRender: !this.state.reRender})
+		console.log('after toggling set state rerender', this.state.reRender)
+	}
 	getCoordinates = {
 	  // request
 	  // 	.get('http://localhost:9292/incedent/create')
@@ -86,15 +96,24 @@ class IncidentMap extends Component {
    //        this.props.handleClose();
    //    })
 	}
-	getLatitude = (latitude) => {
-	    // console.log('this is latitude to be added to array', latitude)
-	    this.setState({latitudes: [...this.state.latitudes, latitude]})
+	// getLatitude = (latitude) => {
+	//     // console.log('this is latitude to be added to array', latitude)
+	//     this.setState({latitudes: [...this.state.latitudes, latitude]})
 	     
-	}
-	getLongitude = (longitude) => {
+	// }
+	// getLongitude = (longitude) => {
 	    
-	    this.setState({longitudes: [...this.state.longitudes, longitude]})
-	    // console.log(this.state.longitudes)
+	//     this.setState({longitudes: [...this.state.longitudes, longitude]})
+	//     // console.log(this.state.longitudes)
+	// }
+
+	addCoordinate = (lat, long) => {
+		
+		console.log("addCoordinate called with lat " + lat + " and long " + long);
+		this.setState({
+			latitudes: [...this.state.latitudes, lat],
+			longitudes: [...this.state.longitudes, long]
+		})
 	}
 	getCoordinates = () => {
 		console.log('this is the URL for the API call',this.getURL())
@@ -103,12 +122,12 @@ class IncidentMap extends Component {
 			.end((error, response)=>{
 				const responseJSON = JSON.parse(response.text)
 				console.log('here is my JSON response.results',responseJSON.results)
-
+				console.log('THIS IS MY ERROR', error)
 				const latitude = responseJSON.results[0].geometry.location.lat;
 				const longitude = responseJSON.results[0].geometry.location.lng;
-				this.getLatitude(latitude);
-				this.getLongitude(longitude);
-
+				// this.getLatitude(latitude);
+				// this.getLongitude(longitude);
+				this.addCoordinate(latitude, longitude)
 
 			})
 
@@ -117,10 +136,19 @@ class IncidentMap extends Component {
 	renderMarkers = (map, maps, latitude, longitude) => {
 		console.log('this is latitude', latitude)
 		console.log('this is longitude', longitude)
-	  		const marker = new maps.Marker({ 	       
-	    	position: {lat: latitude , lng: longitude},
-	    		map,
+	  		/// This just sets up the map from the google api thing
+	  		
+
+	 
+			const marker = new maps.Marker({ 	       
+		    	position: {lat: latitude , lng: longitude},
+		    		map,
 	      	});
+
+	  		const state = this.state;
+	  		state.map = map;
+	  		state.maps = maps;
+	  		this.setState(state)
 
 	      	// const marker = new maps.Marker(positionObject);
   		
@@ -138,6 +166,34 @@ class IncidentMap extends Component {
 		this.getCoordinates();
 		
 	}
+	componentWillMount() {
+
+		let responseJSON = []
+		request
+			.get('http://localhost:9292/incident')
+			.end((error, response)=>{
+				console.log('this is response from server', response)
+				responseJSON = JSON.parse(response.text)
+				console.log('this is response.text in JSON from server', responseJSON)
+				console.log("this is the error", error)
+
+				const state = this.state;
+
+
+				for(let i = 0; i<responseJSON.length; i++){ 
+					state.latitudes.push(responseJSON[i].latitude)
+					// this.getLatitude(responseJSON[i].latitude)
+					// this.getLongitude(responseJSON[i].longitude)
+
+					state.longitudes.push(responseJSON[i].longitude)
+				}
+				this.setState(state)
+			})
+			
+
+
+	}
+
 	// test = ()=>{
 	// 	for (var i = 0; i < this.state.latitudes.length; i++) {
 	// 		console.log("I AM WORKING AS A CALLBACK", this.state.latitudes[i])
@@ -147,7 +203,24 @@ class IncidentMap extends Component {
 	// }
 	
 	render() {
+		console.log("render")
+		// let responseJSON = []
+		// request
+		// 	.get('http://localhost:9292/incident')
+		// 	.end((error, response)=>{
+		// 		console.log('this is response from server', response)
+		// 		responseJSON = JSON.parse(response.text)
+		// 		console.log('this is response.text in JSON from server', responseJSON)
+		// 		console.log("this is the error", error)
 
+		// 			for(let i = 0; i<responseJSON.length; i++){ 
+		// 				this.getLatitude(responseJSON[i].latitude)
+		// 				this.getLongitude(responseJSON[i].longitude)
+		// 			}
+		// 	})
+
+
+	
 
 
 
@@ -169,28 +242,44 @@ class IncidentMap extends Component {
   		top: -MARKER_SIZE / 2
 		}
 
-		const AnyReactComponent = ({ text }) => <div>{ text }</div>;
+		if(this.state.map != ''){
+			
+			const maps = this.state.maps
+			const map = this.state.map
+			
+
+			const markers = this.state.latitudes.map((lat, i) => {
+				return  new maps.Marker({ 	       
+			    	position: {lat: lat, lng: this.state.longitudes[i]},
+			    		map
+			      	});
+
+			})
+
+		}
+		
+
+
+	
 	    return (
 	      <div className='google-map'>
-	      <Menu userId={this.props.userId}/>
+	      <DrawerMenu toggleState={this.toggleState} addCoordinate={this.addCoordinate} userId={this.props.userId}/>
 
 	        <GoogleMapReact defaultCenter={defaultMapCenter} defaultZoom={ defaultZoom }
 	       		 bootstrapURLKeys={{
 	                 key: APIKEY,
 	                 language: 'en'
                  }}
-                 onGoogleApiLoaded={({map, maps, latitude, longitude}) => {
-                 	for (var i = 0; i < this.state.latitudes.length; i++) {
+                 onGoogleApiLoaded={({map, maps}) => {
+                 	console.log('api being loaded called')
+                 	for (let i = 0; i < this.state.latitudes.length; i++) {
+                 		console.log(this.props.userId)
+
                  		this.renderMarkers(map, maps, this.state.latitudes[i], this.state.longitudes[i])
                  	}
                  }}
 				 >	
-				 	
-	        		<AnyReactComponent
-
-	        			lat={ 41.882059 }
-	        			lng={ -87.627815 }
-	        			text={ "Default Map Center at State and Madison" }/>
+				 {this.state.markers}
 
 	        </GoogleMapReact>
 	      </div>

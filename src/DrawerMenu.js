@@ -50,7 +50,7 @@ class DrawerMenu extends Component {
               <MenuItem>Edit Profile</MenuItem>
   	        </Drawer>
   	    </MuiThemeProvider>
-        {this.state.modal ?  <Modal userId={this.props.userId} handleClose={this.handleModalToggle}/> : null}
+        {this.state.modal ?  <Modal toggleState={this.props.toggleState} userId={this.props.userId} handleClose={this.handleModalToggle} addCoordinate={this.props.addCoordinate} /> : null}
         {this.state.incidents ?  <ShowIncidents userId={this.props.userId} handleClose={this.handleIncidentsToggle}/> : null}
       </div>
     );

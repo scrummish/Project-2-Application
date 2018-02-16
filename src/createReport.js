@@ -4,8 +4,10 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import RaisedButton from 'material-ui/RaisedButton';
 
-const geocoder = require('geocoder');
-const REQUEST = require('superagent');
+import APIKEY from './config.js'
+
+
+const request = require('superagent');
 
 class createReport extends Component {
   constructor(props){
@@ -37,21 +39,48 @@ class createReport extends Component {
     // Saving the users input in state
     this.setState({addressToBeGeocoded: e.currentTarget.value})
   }
-  getCoordinates = ()=>{
-    // The geocode method takes a vague address and returns information about that address ex. latitude and longitude
-    geocoder.geocode(this.state.addressToBeGeocoded, (err,res)=>{
-      // Saving the latitude and longitude in state
-        if (res.status === "ZERO_RESULTS"){
-          console.log("ZERO_RESULTS worked")
-        } else {
-          this.setState({addressLongitude: res.results[0].geometry.location.lng, addressLatitude: res.results[0].geometry.location.lat})
-          this.createFormData();
-        }
-    })
+  
+  // Converts address stored in state to latitude and longitude
+  getURL = (address) => {
+    const rootURL = "https://maps.googleapis.com/maps/api/geocode/json?address="
+    const apiKeyURLending = "&key=" + APIKEY;
+    const completeURL = rootURL + address + apiKeyURLending
+    return completeURL
   }
+  addCoordinate = (lat, long) => {
+    
+    console.log("addCoordinate called with lat " + lat + " and long " + long);
+    console.log('this is this.addresslatitude', this.state.addressLatitude)
+    console.log('this is this.addresslongitude', this.state.addressLongitude)
+    this.setState({
+      addressLatitude: lat,
+      addressLongitude: long
+    })
+    this.createFormData()
+  }
+  getCoordinates = ()=>{
+    request
+      .get(this.getURL(this.state.addressToBeGeocoded))
+      .end((error, response)=>{
+        const responseJSON = JSON.parse(response.text)
+        console.log('here is my JSON response.results',responseJSON.results)
+        console.log('THIS IS MY ERROR', error)
+        if(responseJSON.results.length===0){
+          console.log('fake address error')
+        } else {
+        const latitude = responseJSON.results[0].geometry.location.lat;
+        const longitude = responseJSON.results[0].geometry.location.lng;
+        // this.getLatitude(latitude);
+        // this.getLongitude(longitude);
+        this.addCoordinate(latitude, longitude)
+      }
+
+      })
+  }
+
+  // After the geocode method retrieves the lat and long, we create an object with the data needed for the database entry
   createFormData = ()=>{
-    const state = this.state
-    // After the geocode method retrieves the lat and long, we create an object with the data needed for the database entry
+    let state = this.state
     const formData = {
       approximateAddress: state.addressToBeGeocoded,
       addressLongitude: state.addressLongitude,
@@ -64,14 +93,24 @@ class createReport extends Component {
     this.makeNewDatabaseEntry(formData);
   }
   makeNewDatabaseEntry = (formData)=>{
-      REQUEST.post('http://localhost:9292/incident/create')
+      request.post('http://localhost:9292/incident/create')
       .send(formData)
       .end((err,createdIncident)=>{
+          console.log(createdIncident)
           this.props.handleClose();
+
+          // call function here to add incident to the state in incident map.js
+          // this function will come from/through Drawer parent
+          const parsedResponse = JSON.parse(createdIncident.text)
+          this.props.addCoordinate(parsedResponse.latitude, parsedResponse.longitude)
+
+          // this.props.toggleState();
       })
+
   }
-  // This lets you close the modal by clicking anywhere around it
-  closeModal = (e)=>{
+
+
+  close = (e)=>{
     if (e.target.className === "modal-container") {
       this.props.handleClose();
     }
