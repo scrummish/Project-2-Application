@@ -42,7 +42,9 @@ class Login extends Component {
       REQUEST.post('https://afternoon-anchorage-72517.herokuapp.com/user/login')
       .send(formData)
       .end((err,createdUser)=>{
+        console.log(parsedUser)
         const parsedUser = JSON.parse(createdUser.text);
+        console.log(parsedUser)
         const registration_success_or_fail = parsedUser[2][1];
       
         if (registration_success_or_fail === true) {
