@@ -39,7 +39,7 @@ class Login extends Component {
     }
   }
   login = (formData)=>{
-      REQUEST.post('http://localhost:9292/user/login')
+      REQUEST.post('https://afternoon-anchorage-72517.herokuapp.com/user/login')
       .send(formData)
       .end((err,createdUser)=>{
         const parsedUser = JSON.parse(createdUser.text);

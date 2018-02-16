@@ -39,7 +39,7 @@ componentWillMount() {
 
 		let responseJSON = []
 		request
-			.get('http://localhost:9292/incident')
+			.get('https://afternoon-anchorage-72517.herokuapp.com/incident')
 			.end((error, response)=>{
 				console.log('this is response from server', response)
 				responseJSON = JSON.parse(response.text)

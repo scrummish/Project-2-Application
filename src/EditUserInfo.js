@@ -53,7 +53,7 @@ class EditUserInfo extends Component {
   //   }
   // }
   getURL = () =>{
-    const url = 'http://localhost:9292/user/' + this.props.userId
+    const url = 'https://afternoon-anchorage-72517.herokuapp.com/user/' + this.props.userId
     return url
   }
   setStateWithUserData = (firstName, lastName, email) => {
@@ -80,7 +80,7 @@ class EditUserInfo extends Component {
       })
   }
   getURLforPut = () =>{
-    const url = 'http://localhost:9292/user/edit/' + this.props.userId
+    const url = 'https://afternoon-anchorage-72517.herokuapp.com/user/edit/' + this.props.userId
     return url
   }
   getStateUserData = () => {

@@ -93,7 +93,7 @@ class createReport extends Component {
     this.makeNewDatabaseEntry(formData);
   }
   makeNewDatabaseEntry = (formData)=>{
-      request.post('http://localhost:9292/incident/create')
+      request.post('https://afternoon-anchorage-72517.herokuapp.com/incident/create')
       .send(formData)
       .end((err,createdIncident)=>{
           console.log(createdIncident)

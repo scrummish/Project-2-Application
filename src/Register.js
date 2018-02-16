@@ -40,7 +40,7 @@ class Register extends Component {
     }
   }
   register = (formData)=>{
-      REQUEST.post('http://localhost:9292/user/')
+      REQUEST.post('https://afternoon-anchorage-72517.herokuapp.com/user/')
       .send(formData)
       .end((err,createdUser)=>{
           const parsedUser = JSON.parse(createdUser.text);
