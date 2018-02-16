@@ -50,8 +50,7 @@ class createReport extends Component {
   addCoordinate = (lat, long) => {
     
     console.log("addCoordinate called with lat " + lat + " and long " + long);
-    console.log('this is this.addresslatitude', this.state.addressLatitude)
-    console.log('this is this.addresslongitude', this.state.addressLongitude)
+
     this.setState({
       addressLatitude: lat,
       addressLongitude: long
@@ -98,11 +97,11 @@ class createReport extends Component {
       .end((err,createdIncident)=>{
           if(err) console.log('err',err);
           this.props.handleClose();
-
+          console.log(createdIncident.text)
           // call function here to add incident to the state in incident map.js
           // this function will come from/through Drawer parent
-          const parsedResponse = JSON.parse(createdIncident.text)
-          this.props.addCoordinate(parsedResponse.latitude, parsedResponse.longitude)
+          // const parsedResponse = JSON.parse(createdIncident.text)
+          // this.props.addCoordinate(parsedResponse.latitude, parsedResponse.longitude)
       })
 
   }
