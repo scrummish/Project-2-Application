@@ -51,6 +51,7 @@ class IncidentTable extends Component {
       this.handleDeletes(id)
   }
   componentDidMount(){
+    console.log(this.props.userId)
       REQUEST.get('https://afternoon-anchorage-72517.herokuapp.com/incident/'+this.props.userId+'/myIncidents')
       .end((err,returnedData)=>{
         const parsedData = JSON.parse(returnedData.text);
