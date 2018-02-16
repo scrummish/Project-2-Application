@@ -48,7 +48,7 @@ class Register extends Component {
           if (parsedUser === "false") {
             this.setState({toggleEmailError: true})
           } else {
-            this.props.loginSuccess(parsedUser[4][1]); 
+            this.props.loginSuccess(parsedUser[3][1]); 
           }
       })
   }
