@@ -41,7 +41,7 @@ class IncidentTable extends Component {
     this.setState({height: event.target.value});
   }
   handleDeletes = (id)=>{
-      REQUEST.delete('http://localhost:9292/incident/delete/'+id)
+      REQUEST.delete('https://afternoon-anchorage-72517.herokuapp.com/incident/delete/'+id)
       .end((err,returnedData)=>{
         this.props.handleClose();
       })
@@ -51,7 +51,7 @@ class IncidentTable extends Component {
       this.handleDeletes(id)
   }
   componentDidMount(){
-      REQUEST.get('http://localhost:9292/incident/'+this.props.userId+'/myIncidents')
+      REQUEST.get('https://afternoon-anchorage-72517.herokuapp.com/incident/'+this.props.userId+'/myIncidents')
       .end((err,returnedData)=>{
         const parsedData = JSON.parse(returnedData.text);
         const parsedIncidents = parsedData.incidents;

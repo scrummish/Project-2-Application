@@ -102,7 +102,6 @@ class createReport extends Component {
           // call function here to add incident to the state in incident map.js
           // this function will come from/through Drawer parent
           const parsedResponse = JSON.parse(createdIncident.text)
-          console.log('----------', parsedResponse)
           this.props.addCoordinate(parsedResponse.latitude, parsedResponse.longitude)
       })
 
