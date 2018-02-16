@@ -18,6 +18,7 @@ class App extends Component {
   }
   
   loginSuccess = (param)=>{
+    console.log(param);
     this.setState({signedin: true, userId: param})
   }
   reRenderForm = ()=>{
