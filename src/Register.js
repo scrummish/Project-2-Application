@@ -44,6 +44,7 @@ class Register extends Component {
       .send(formData)
       .end((err,createdUser)=>{
           const parsedUser = JSON.parse(createdUser.text);
+          console.log(parsedUser);
           if (parsedUser === "false") {
             this.setState({toggleEmailError: true})
           } else {
