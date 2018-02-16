@@ -45,10 +45,10 @@ class Register extends Component {
       .end((err,createdUser)=>{
           const parsedUser = JSON.parse(createdUser.text);
           console.log(parsedUser);
-          if (parsedUser === "false") {
-            this.setState({toggleEmailError: true})
-          } else {
+          if (parsedUser[1][1]) {
             this.props.loginSuccess(parsedUser[3][1]); 
+          } else {
+            this.setState({toggleEmailError: true})
           }
       })
   }
