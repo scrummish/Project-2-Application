@@ -83,9 +83,9 @@ class IncidentMap extends Component {
 
 	}
 	toggleState = () => {
-		console.log('before toggling set state rerender', this.state.reRender)
+	//	console.log('before toggling set state rerender', this.state.reRender)
 		this.setState({reRender: !this.state.reRender})
-		console.log('after toggling set state rerender', this.state.reRender)
+	//	console.log('after toggling set state rerender', this.state.reRender)
 	}
 	getCoordinates = {
 	  // request
@@ -121,8 +121,8 @@ class IncidentMap extends Component {
 			.get(this.getURL())
 			.end((error, response)=>{
 				const responseJSON = JSON.parse(response.text)
-				console.log('here is my JSON response.results',responseJSON.results)
-				console.log('THIS IS MY ERROR', error)
+	//			console.log('here is my JSON response.results',responseJSON.results)
+	//			console.log('THIS IS MY ERROR', error)
 				const latitude = responseJSON.results[0].geometry.location.lat;
 				const longitude = responseJSON.results[0].geometry.location.lng;
 				// this.getLatitude(latitude);
@@ -172,10 +172,10 @@ class IncidentMap extends Component {
 		request
 			.get('http://localhost:9292/incident')
 			.end((error, response)=>{
-				console.log('this is response from server', response)
+	//			console.log('this is response from server', response)
 				responseJSON = JSON.parse(response.text)
-				console.log('this is response.text in JSON from server', responseJSON)
-				console.log("this is the error", error)
+		//		console.log('this is response.text in JSON from server', responseJSON)
+		//		console.log("this is the error", error)
 
 				const state = this.state;
 

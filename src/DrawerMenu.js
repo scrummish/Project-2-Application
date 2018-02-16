@@ -7,6 +7,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Modal from './createReport'
 import ShowIncidents from './ShowIncidents'
 import Divider from 'material-ui/Divider';
+import EditUser from './EditUser'
 
 const style = {
   position: "absolute",
@@ -20,13 +21,15 @@ class DrawerMenu extends Component {
     this.state = {
       open: false,
       modal: false,
-      incidents: false
+      incidents: false,
+      editUser: false
     };
   }
 
   handleDrawerToggle = () => this.setState({open: !this.state.open});
   handleModalToggle = () => this.setState({modal: !this.state.modal});
   handleIncidentsToggle = () => this.setState({incidents: !this.state.incidents});
+  handleEditUserToggle = () => this.setState({editUser: !this.state.editUser});
 
   handleModal = () =>{
     this.setState({open: false, modal: true});
@@ -34,6 +37,10 @@ class DrawerMenu extends Component {
   handleIncident = () =>{
     this.setState({open: false, incidents: true});
   }
+  handleEditUser = () =>{
+    this.setState({open: false, editUser: true});
+  }
+
   render() {
     return (
       <div>
@@ -46,12 +53,12 @@ class DrawerMenu extends Component {
   	          onRequestChange={(open) => this.setState({open})}>
   	          <MenuItem onClick={this.handleModal}>Report an Incident</MenuItem>
               <MenuItem onClick={this.handleIncident}>See My Incidents</MenuItem>
-              <Divider />
-              <MenuItem>Edit Profile</MenuItem>
+              <MenuItem onClick={this.handleEditUser}>Edit Profile</MenuItem>
   	        </Drawer>
   	    </MuiThemeProvider>
         {this.state.modal ?  <Modal toggleState={this.props.toggleState} userId={this.props.userId} handleClose={this.handleModalToggle} addCoordinate={this.props.addCoordinate} /> : null}
         {this.state.incidents ?  <ShowIncidents userId={this.props.userId} handleClose={this.handleIncidentsToggle}/> : null}
+        {this.state.editUser ? <EditUser userId={this.props.userId} handleClose={this.handleEditUserToggle}/> : null}
       </div>
     );
   }
