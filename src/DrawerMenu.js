@@ -21,15 +21,13 @@ class DrawerMenu extends Component {
     this.state = {
       open: false,
       modal: false,
-      incidents: false,
-      editUser: false
+      incidents: false
     };
   }
 
   handleDrawerToggle = () => this.setState({open: !this.state.open});
   handleModalToggle = () => this.setState({modal: !this.state.modal});
   handleIncidentsToggle = () => this.setState({incidents: !this.state.incidents});
-  handleEditUserToggle = () => this.setState({editUser: !this.state.editUser});
 
   handleModal = () =>{
     this.setState({open: false, modal: true});
@@ -54,12 +52,10 @@ class DrawerMenu extends Component {
   	          <MenuItem onClick={this.handleModal}>Report an Incident</MenuItem>
               <MenuItem onClick={this.handleIncident}>See My Incidents</MenuItem>
               <Divider/>
-              <MenuItem onClick={this.handleEditUser}>Edit Profile</MenuItem>
   	        </Drawer>
   	    </MuiThemeProvider>
         {this.state.modal ?  <Modal toggleState={this.props.toggleState} userId={this.props.userId} handleClose={this.handleModalToggle} addCoordinate={this.props.addCoordinate} /> : null}
         {this.state.incidents ?  <ShowIncidents userId={this.props.userId} handleClose={this.handleIncidentsToggle}/> : null}
-        {this.state.editUser ? <EditUser userId={this.props.userId} handleClose={this.handleEditUserToggle}/> : null}
       </div>
     );
   }
