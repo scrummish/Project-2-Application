@@ -96,13 +96,13 @@ class createReport extends Component {
       request.post('https://afternoon-anchorage-72517.herokuapp.com/incident/create')
       .send(formData)
       .end((err,createdIncident)=>{
-          if(err) console.log(err);
-          console.log(createdIncident)
+          if(err) console.log('err',err);
           this.props.handleClose();
 
           // call function here to add incident to the state in incident map.js
           // this function will come from/through Drawer parent
           const parsedResponse = JSON.parse(createdIncident.text)
+          console.log('----------', parsedResponse)
           this.props.addCoordinate(parsedResponse.latitude, parsedResponse.longitude)
       })
 
