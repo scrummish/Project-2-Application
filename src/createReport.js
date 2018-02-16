@@ -101,7 +101,7 @@ class createReport extends Component {
           } 
           const parsedResponse = JSON.parse(createdIncident.text)
           console.log(parsedResponse)
-          this.props.addCoordinate(parsedResponse.latitude, parsedResponse.longitude)
+          // this.props.addCoordinate(parsedResponse.latitude, parsedResponse.longitude)
       })
 
   }
