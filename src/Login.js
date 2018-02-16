@@ -45,7 +45,7 @@ class Login extends Component {
         console.log(parsedUser)
         const parsedUser = JSON.parse(createdUser.text);
         console.log(parsedUser)
-        const registration_success_or_fail = parsedUser[2][1];
+        const registration_success_or_fail = parsedUser[1][1];
       
         if (registration_success_or_fail === true) {
           console.log(parsedUser[4][1])
