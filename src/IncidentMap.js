@@ -62,9 +62,9 @@ class IncidentMap extends Component {
 
 		let responseJSON = []
 		request
-			.get('https://desolate-sierra-97938.herokuapp.com/incident')
+			.get('https://afternoon-anchorage-72517.herokuapp.com/incident')
 			.end((error, response)=>{
-				responseJSON = JSON.parse(response.text)
+				// responseJSON = JSON.parse(response.text)
 				const state = this.state;
 				for(let i = 0; i<responseJSON.length; i++){ 
 					state.latitudes.push(responseJSON[i].latitude)
