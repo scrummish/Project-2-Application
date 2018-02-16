@@ -95,10 +95,11 @@ class createReport extends Component {
       request.post('https://afternoon-anchorage-72517.herokuapp.com/incident/create')
       .send(formData)
       .end((err,createdIncident)=>{
-          if(err){
-            console.log('CREATEREPORT err------',err);
-            this.props.handleClose();
-          } 
+          // if(err){
+          //   console.log('CREATEREPORT err------',err);
+          //   this.props.handleClose();
+          // } 
+          console.log(createdIncident)
           // const parsedResponse = JSON.parse(createdIncident.text)
           // console.log(parsedResponse)
           // this.props.addCoordinate(parsedResponse.latitude, parsedResponse.longitude)
