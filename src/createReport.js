@@ -38,16 +38,18 @@ class Modal extends Component {
     // The geocode method takes a vague address and returns information about that address ex. latitude and longitude
     GEOCODER.geocode(this.state.addressToBeGeocoded, (err,res)=>{
       // Saving the latitude and longitude in state and checking for address input errors
-      if (res.error_message) {
-        console.log("create UI notice to the user that the address doesnt work")
-      } else if (res.status === "OK") {
-        this.setState({addressLongitude: res.results[0].geometry.location.lng, addressLatitude: res.results[0].geometry.location.lat})
-        this.createFormData();
-      } else if (res.status === "ZERO_RESULTS"){
-        console.log("create UI notice to the user that the address doesnt work")
-      } else {
-        console.log('unhandled error in get coordinates createReport component',res)
-      }
+      // if (res.error_message) {
+      //   console.log("create UI notice to the user that the address doesnt work")
+      // } else if (res.status === "OK") {
+      //   this.setState({addressLongitude: res.results[0].geometry.location.lng, addressLatitude: res.results[0].geometry.location.lat})
+      //   this.createFormData();
+      // } else if (res.status === "ZERO_RESULTS"){
+      //   console.log("create UI notice to the user that the address doesnt work")
+      // } else {
+      //   console.log('unhandled error in get coordinates createReport component',res)
+      // }
+      console.log('error',err)
+      console.log('res',res)
     })
   }
 
