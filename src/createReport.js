@@ -4,7 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import RaisedButton from 'material-ui/RaisedButton';
 
-const GEOCODER = require('geocoder');
+// const GEOCODER = require('geocoder');
 const REQUEST = require('superagent');
 
 class Modal extends Component {
@@ -33,10 +33,44 @@ class Modal extends Component {
     this.setState({addressToBeGeocoded: e.currentTarget.value})
   }
 
-  // Gets the coordinates for the incident creation
+  getURL = (address) => {
+    const rootURL = "https://maps.googleapis.com/maps/api/geocode/json?address="
+    const apiKeyURLending = "&key=AIzaSyDwY1zA1DNB2g1jApsXI7iruNH2ZfAJgfU";
+    const completeURL = rootURL + address + apiKeyURLending
+    return completeURL
+  }
+
+  addCoordinate = (lat, long) => {
+    this.setState({
+      addressLatitude: lat,
+      addressLongitude: long
+    })
+    this.createFormData()
+  }
+
   getCoordinates = ()=>{
+    REQUEST
+      .get(this.getURL(this.state.addressToBeGeocoded))
+      .end((error, response)=>{
+        const responseJSON = JSON.parse(response.text)
+        console.log('here is my JSON response.results', responseJSON.results)
+        // console.log('THIS IS MY ERROR', error)
+        if(responseJSON.results.length===0){
+          console.log('fake address error')
+        } else {
+          const latitude = responseJSON.results[0].geometry.location.lat;
+          const longitude = responseJSON.results[0].geometry.location.lng;
+          // this.getLatitude(latitude);
+          // this.getLongitude(longitude);
+          this.addCoordinate(latitude, longitude)
+        }
+      })
+  }
+
+  // Gets the coordinates for the incident creation
+  // getCoordinates = ()=>{
     // The geocode method takes a vague address and returns information about that address ex. latitude and longitude
-    GEOCODER.geocode(this.state.addressToBeGeocoded, (err,res)=>{
+    // GEOCODER.geocode(this.state.addressToBeGeocoded, (err,res)=>{
       // Saving the latitude and longitude in state and checking for address input errors
       // if (res.error_message) {
       //   console.log("create UI notice to the user that the address doesnt work")
@@ -48,10 +82,10 @@ class Modal extends Component {
       // } else {
       //   console.log('unhandled error in get coordinates createReport component',res)
       // }
-      console.log('error',err)
-      console.log('res',res)
-    })
-  }
+  //     console.log('error',err)
+  //     console.log('res',res)
+  //   })
+  // }
 
   // After the getCoordinates method retrieves the lat and long, we create an object with the data needed for the database entry
   createFormData =()=>{
