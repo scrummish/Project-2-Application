@@ -86,7 +86,7 @@ class IncidentMap extends Component {
 	      <DrawerMenu toggleState={this.toggleState} addCoordinate={this.addCoordinate} userId={this.props.userId}/>
 	      <GoogleMapReact yesIWantToUseGoogleMapApiInternals={true} defaultCenter={defaultMapCenter} defaultZoom={ defaultZoom }
 	       		 bootstrapURLKeys={{
-	                 key: 'AIzaSyBv4XEWXSKVDA_fhgyp3kC82wThb7xa1Vw',
+	                 key: 'AIzaSyDwY1zA1DNB2g1jApsXI7iruNH2ZfAJgfU',
 	                 language: 'en'
                  }}
                  onGoogleApiLoaded={({map, maps}) => {
