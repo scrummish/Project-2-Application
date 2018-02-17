@@ -4,7 +4,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import RaisedButton from 'material-ui/RaisedButton';
 
-// const GEOCODER = require('geocoder');
 const REQUEST = require('superagent');
 
 class Modal extends Component {
@@ -33,13 +32,15 @@ class Modal extends Component {
     this.setState({addressToBeGeocoded: e.currentTarget.value})
   }
 
+  // Creates the URL needed to request the coordinates from google
   getURL = (address) => {
-    const rootURL = "https://maps.googleapis.com/maps/api/geocode/json?address="
-    const apiKeyURLending = "&key=AIzaSyDwY1zA1DNB2g1jApsXI7iruNH2ZfAJgfU";
-    const completeURL = rootURL + address + apiKeyURLending
-    return completeURL
+    const ROOT_URL = "https://maps.googleapis.com/maps/api/geocode/json?address="
+    const API_KEY_URL_ENDING = "&key=AIzaSyDwY1zA1DNB2g1jApsXI7iruNH2ZfAJgfU";
+    const COMPLETE_URL = ROOT_URL + address + API_KEY_URL_ENDING
+    return COMPLETE_URL
   }
 
+  // Sets the coordinates in state for later use
   addCoordinate = (lat, long) => {
     this.setState({
       addressLatitude: lat,
@@ -48,44 +49,21 @@ class Modal extends Component {
     this.createFormData()
   }
 
+  // Requests coordinates from google for a givin address
   getCoordinates = ()=>{
     REQUEST
       .get(this.getURL(this.state.addressToBeGeocoded))
       .end((error, response)=>{
         const responseJSON = JSON.parse(response.text)
-        console.log('here is my JSON response.results', responseJSON.results)
-        // console.log('THIS IS MY ERROR', error)
         if(responseJSON.results.length===0){
           console.log('fake address error')
         } else {
-          const latitude = responseJSON.results[0].geometry.location.lat;
-          const longitude = responseJSON.results[0].geometry.location.lng;
-          // this.getLatitude(latitude);
-          // this.getLongitude(longitude);
-          this.addCoordinate(latitude, longitude)
+          const LATITUDE = responseJSON.results[0].geometry.location.lat;
+          const LONGITUDE = responseJSON.results[0].geometry.location.lng;
+          this.addCoordinate(LATITUDE, LONGITUDE)
         }
       })
   }
-
-  // Gets the coordinates for the incident creation
-  // getCoordinates = ()=>{
-    // The geocode method takes a vague address and returns information about that address ex. latitude and longitude
-    // GEOCODER.geocode(this.state.addressToBeGeocoded, (err,res)=>{
-      // Saving the latitude and longitude in state and checking for address input errors
-      // if (res.error_message) {
-      //   console.log("create UI notice to the user that the address doesnt work")
-      // } else if (res.status === "OK") {
-      //   this.setState({addressLongitude: res.results[0].geometry.location.lng, addressLatitude: res.results[0].geometry.location.lat})
-      //   this.createFormData();
-      // } else if (res.status === "ZERO_RESULTS"){
-      //   console.log("create UI notice to the user that the address doesnt work")
-      // } else {
-      //   console.log('unhandled error in get coordinates createReport component',res)
-      // }
-  //     console.log('error',err)
-  //     console.log('res',res)
-  //   })
-  // }
 
   // After the getCoordinates method retrieves the lat and long, we create an object with the data needed for the database entry
   createFormData =()=>{
@@ -101,20 +79,20 @@ class Modal extends Component {
     this.makeNewDatabaseEntry(FORM_DATA);
   }
 
-  // Calls API to create a new database entry
-  makeNewDatabaseEntry = (FORM_DATA)=>{
-      REQUEST
-        .post('https://afternoon-anchorage-72517.herokuapp.com/incident/create')
-        .send(FORM_DATA)
-        .end((err,createdIncident)=>{
-          if (err){
-            console.log('error occurred at createReport component', err)
-          } else {
-            const JSON_RESPONSE = JSON.parse(createdIncident.text)
-            this.props.addCoordinate(JSON_RESPONSE.latitude, JSON_RESPONSE.longitude)
-            this.props.handleClose()
-          }
-        })
+  // Calls snitchr API to create a new database entry
+  makeNewDatabaseEntry = (formData)=>{
+    REQUEST
+      .post('https://afternoon-anchorage-72517.herokuapp.com/incident/create')
+      .send(formData)
+      .end((err,createdIncident)=>{
+        if (err){
+          console.log('error occurred at createReport component', err)
+        } else {
+          const JSON_RESPONSE = JSON.parse(createdIncident.text)
+          this.props.addCoordinate(JSON_RESPONSE.latitude, JSON_RESPONSE.longitude)
+          this.props.handleClose()
+        }
+      })
   }
   // Used to close the createReport Modal when the user clicks anywhere around it
   closeModal = (e)=>{
@@ -122,6 +100,7 @@ class Modal extends Component {
       this.props.handleClose();
     }
   }
+
 render() {
   return (
     <MuiThemeProvider muiTheme={getMuiTheme()}>
