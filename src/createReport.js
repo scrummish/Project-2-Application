@@ -16,7 +16,7 @@ class Modal extends Component {
           addressLatitude: "",
           incidentType: "",
           incidentLocationDescription: "",
-          incidentDetails: "ADD FORM ELEMENT TO ALLOW USER TO EDIT ME",
+          incidentDetails: "",
           userId: this.props.userId
     }
   }
@@ -24,6 +24,9 @@ class Modal extends Component {
   // The following handle methods collect the users input for each property
   handleChangeIncidentType = (e)=>{
     this.setState({incidentType: e.currentTarget.value})
+  }
+  handleChangeIncidentDetails = (e)=>{
+    this.setState({incidentDetails: e.currentTarget.value})
   }
   handleChangeIncidentLocationDescription = (e)=>{
     this.setState({incidentLocationDescription: e.currentTarget.value})
@@ -110,6 +113,9 @@ render() {
         <div id ="cloud">
           <div className="cloud-field">
              <TextField value={this.state.incidentType} onChange={this.handleChangeIncidentType} fullWidth={true} hintText="Type of incident" floatingLabelText="Incident *"/>
+          </div>
+          <div className="cloud-field">
+             <TextField value={this.state.incidentDetails} onChange={this.handleChangeIncidentDetails} fullWidth={true} hintText="Details of the incident" floatingLabelText="Detailed Snitch *"/>
           </div>
           <div className="cloud-field">
              <TextField value={this.state.incidentLocationDescription} onChange={this.handleChangeIncidentLocationDescription} fullWidth={true} hintText="Location Description" floatingLabelText="Description"/>
