@@ -7,8 +7,8 @@ import snitchrlogo from './snitchrlogo.png';
 import './css/SignInScreen.css';
 
 class SignInScreen extends Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     
     this.state={
       
@@ -18,7 +18,7 @@ render() {
   return (
       <div className="sign-in-flex-container">
         <section id="sign-in-flex-child1" className="sign-in-flex-child">
-          <img alt="Snitch logo" src={snitchrlogo}/>
+          <img alt="logo" src={snitchrlogo}/>
           <p id="subtitle">be safe, be aware, be informed</p>
           <div id="signin-cloud-container"> 
             <div id="signin-cloud1"></div>

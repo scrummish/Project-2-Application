@@ -32,11 +32,11 @@
 	height: 200px;
 	width: 600px; 
 	background: #f2f9fe;
-	background: linear-gradient(top, white 5%, #d6f0fd 100%);
+/*	background: linear-gradient(top, white 5%, #d6f0fd 100%);
 	background: -webkit-linear-gradient(top, white 5%, #d6f0fd 100%);
 	background: -moz-linear-gradient(top, white 5%, #d6f0fd 100%);
 	background: -ms-linear-gradient(top, white 5%, #d6f0fd 100%);
-	background: -o-linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
+	background: -o-linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);*/
 	border-radius: 100px;
 	-webkit-border-radius: 100px;
 	-moz-border-radius: 100px;
@@ -56,7 +56,7 @@
 	-moz-border-radius: 200px;
 	position: relative;
 	background: white;
-	background: linear-gradient(top, white 50%, #d6f0fd 100%);
+	/*background: linear-gradient(top, white 50%, #d6f0fd 100%);*/
 }
 #signin-cloud-container {
 
@@ -68,11 +68,11 @@
 	height: 200px;
 	max-width: 500px; 
 	background: #f2f9fe;
-	background: linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
+/*	background: linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
 	background: -webkit-linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
 	background: -moz-linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
 	background: -ms-linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
-	background: -o-linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
+	background: -o-linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);*/
 	border-radius: 100px;
 	-webkit-border-radius: 100px;
 	-moz-border-radius: 100px;

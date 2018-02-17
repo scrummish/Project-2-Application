@@ -2,28 +2,26 @@ import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Subheader from 'material-ui/Subheader';
-const REQUEST = require('superagent');
 const styles = {
   register: {
-    fontSize: "1.1em",
+    "font-size": "1.1em",
     color: 'rgb(0, 188, 212)',
-    paddingLeft: '0',
-    marginLeft: '5%',
-    fontWeight: '600',
+    'padding-left': '0',
+    'margin-left': '5%',
+    'font-weight': '600',
   }
 };
 
-class Register extends Component {
-  constructor(props){
-    super(props);
-    
+
+class EditUserInfo extends Component {
+  constructor(){
+    super();
     this.state={
       firstname:'',
       lastname:'',
       email:'',
       password:'',
-      toggleError: false,
-      toggleEmailError: false
+      phonenumber: ''
     }
   }
   createUser = ()=>{
@@ -36,22 +34,8 @@ class Register extends Component {
         email: this.state.email,
         password: this.state.password
       }
-      this.register(REGISTRATION);
+      this.props.register(REGISTRATION);
     }
-  }
-  register = (formData)=>{
-      REQUEST.post('https://afternoon-anchorage-72517.herokuapp.com/user')
-      .send(formData)
-      .end((err,createdUser)=>{
-          const parsedUser = JSON.parse(createdUser.text);
-          if (parsedUser === "false") {
-            console.log('parsedUser false inn register,js', parsedUser)
-            this.setState({toggleEmailError: true})
-          } else {
-            const userId = parsedUser[3][1];
-            this.props.loginSuccess(userId); 
-          }
-      })
   }
   render() {
     return (
@@ -67,7 +51,7 @@ class Register extends Component {
             </div>
             <br/>
             <div className="register-field">
-              { this.state.toggleEmailError ? <TextField fullWidth={true} hintText="Enter your Email" errorText="Invalid email" type="email" floatingLabelText="Email *" onChange={(e,newValue) => this.setState({email:newValue})}/> : <TextField fullWidth={true} hintText="Enter your Email" type="email" floatingLabelText="Email *" onChange={(e,newValue) => this.setState({email:newValue})}/> }
+              <TextField fullWidth={true} hintText="Enter your Email" type="email" floatingLabelText="Email *" onChange={(e,newValue) => this.setState({email:newValue})}/>
             </div>
             <br/>
             <div className="register-field">
@@ -83,4 +67,4 @@ class Register extends Component {
   }
 }
 
-export default Register;
+export default EditUserInfo;

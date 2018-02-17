@@ -26,38 +26,36 @@ class Login extends Component {
       toggleLoginError: true
     }
   }
-  handleLogin = (e)=>{
+  handleLogin = ()=>{
     const loginData = {
       email: this.state.email,
       password: this.state.password
     }
     this.login(loginData);
   }
-  handleKeyPress = (e)=>{
-    if(e.charCode === 13){
-        this.handleLogin();
-    }
-  }
-  login = (formData)=>{
-      REQUEST.post('https://afternoon-anchorage-72517.herokuapp.com/user/login')
+  
+  // Login 
+  login =(formData)=>{
+    REQUEST
+      .post('https://afternoon-anchorage-72517.herokuapp.com/user/login')
       .send(formData)
       .end((err,createdUser)=>{
-        console.log(parsedUser)
         const parsedUser = JSON.parse(createdUser.text);
-        console.log(parsedUser)
-        const registration_success_or_fail = parsedUser[1][1];
-      
-        if (registration_success_or_fail === true) {
-          console.log("user id if it exists in login.js ", parsedUser[4][1])
-          this.props.loginSuccess(parsedUser[4][1]);
-        } else {
+        const loggedIn = parsedUser[1][1]
+        if (loggedIn === true) {
+          const userId = parsedUser[3][1]
+          this.props.loginSuccess(userId);
+        } else if (loggedIn === "Invalid username or password") {
           this.setState({toggleLoginError: false})
+        } else {
+          console.log('unhandled error at login component when logging in')
         }
       })
   }
+
 render() {
   return (
-      <div className="log-in-section" onKeyPress={this.handleKeyPress}> 
+      <div className="log-in-section"> 
         <Subheader style={styles.login}>Existing Users</Subheader>
           <div className="login-form-email">
            {this.state.toggleLoginError ? <TextField fullWidth={true} hintText="Enter your Email" floatingLabelText="Email*" onChange = {(e,newValue) => this.setState({email:newValue})}/> : <TextField fullWidth={true} hintText="Enter your Email" errorText="Invalid email or password" floatingLabelText="Email*" onChange = {(e,newValue) => this.setState({email:newValue})}/>}
