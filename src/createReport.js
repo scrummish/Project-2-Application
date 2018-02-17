@@ -35,8 +35,9 @@ class Modal extends Component {
 
   // Gets the coordinates for the incident creation
   getCoordinates = ()=>{
+    var geocoder = new google.maps.Geocoder()
     // The geocode method takes a vague address and returns information about that address ex. latitude and longitude
-    GEOCODER.geocode(this.state.addressToBeGeocoded, (err,res)=>{
+    geocoder.geocode(this.state.addressToBeGeocoded, (err,res)=>{
       // Saving the latitude and longitude in state and checking for address input errors
       // if (res.error_message) {
       //   console.log("create UI notice to the user that the address doesnt work")
