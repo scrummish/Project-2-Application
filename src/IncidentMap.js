@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import APIKEY from './config.js'
+// import APIKEY from './config.js'
 import GoogleMapReact from 'google-map-react'
 import './css/IncidentMap.css'
 import DrawerMenu from './DrawerMenu'
